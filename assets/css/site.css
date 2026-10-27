@@ -1,0 +1,3148 @@
+/* HopOn's site. Every stylesheet, in the order they apply.
+
+   The build (builder/assets.py) writes each @import in, so a page links
+   this one file. Adding a stylesheet: a file in the right folder, a line
+   here.
+
+   tokens      the app's colours, type, shapes and timings, as variables
+   base        the page itself: fonts, text, links, focus, motion
+   layout      the frame every page shares: header, footer, width
+   components  the pieces pages are made of
+   pages       what is one page's alone                                   */
+
+/* ── tokens.css ── */
+/* The app's look, as variables. The colours are AppColors
+   (app/lib/app/theme/app_colors.dart) — change one there, change it here. */
+
+:root {
+  /* Ground. Near-black with a blue-violet lean, never #000: pure black
+     makes the amber look radioactive and kills depth. */
+  --ink: #15151b;
+  --surface: #1e1e27;
+  --surface-high: #2a2a36;
+  --shell: #23232c;
+
+  /* Ink on ground. Warm off-white, like the wordmark; never pure white. */
+  --cream: #f5efe3;
+  --cream-dim: #9a98a6;
+  --cream-faint: #615f6e;
+
+  /* The mascot colours, which are also the accent palette. */
+  --yellow: #ffc83d;
+  --gold: #ffd75e;
+  --purple: #a78bfa;
+  --blue: #4c9aff;
+  --teal: #2dd4bf;
+  --pink: #ff7ba9;
+  --red: #ff5a4f;
+  --orange: #ff9f45;
+  --green: #6bcb5a;
+  --magenta: #d6449c;
+
+  /* THE ACCENT IS THE VISITOR'S HOP. In the app the equipped colour paints
+     every button; here the colour picked in the room (modules/colours.js)
+     does, and "You" wears it. --on-accent is worked out from its
+     luminance by modules/accent.js, as AppColors.onAccent does. */
+  --you: var(--yellow);
+  --accent: var(--you);
+  --on-accent: var(--ink);
+
+  /* Things from the real world keep their own colours whatever the accent:
+     paper stays paper, wood stays wood. */
+  --paper: #f3efe6;
+  --paper-ink: #1d1c22;
+  --paper-dim: #7d786e;
+  --wood: #6b4a2e;
+  --wood-deep: #3d2a1b;
+  --brass: #c9a456;
+  --live: #e5484d;
+
+  --line: rgba(245, 239, 227, 0.08);
+  --line-strong: rgba(245, 239, 227, 0.14);
+
+  /* Type: Roboto, as the app on Android. Heavy at the top end, because the
+     wordmark is a fat rounded sans. Mono for receipts, serif for the law. */
+  --font: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Droid Sans Mono", ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+  --font-serif: Georgia, "Noto Serif", "Times New Roman", serif;
+
+  /* Shape and space. */
+  --radius-s: 10px;
+  --radius: 16px;
+  --radius-l: 24px;
+  --radius-pill: 999px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --max: 1200px;
+
+  /* Motion. --ease-hop overshoots, like Hop landing. */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-hop: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --fast: 160ms;
+  --med: 320ms;
+  --slow: 600ms;
+
+  --raised: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+/* ── fonts.css ── */
+/* Roboto, and Droid Sans Mono for the receipts, served from the site
+   (tools/make_fonts.py). Paths are from where the built stylesheet sits,
+   assets/css/ — true of every url() in every file site.css imports. */
+
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/droid-sans-mono.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/roboto-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/roboto-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/roboto-700.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("../fonts/roboto-900.woff2") format("woff2");
+}
+
+/* ── base.css ── */
+/* The page itself. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  color-scheme: dark;
+  background: var(--ink);
+}
+
+/* The store shots' ground: the ink, a faint grid of dots, and a warm glow
+   from above in the visitor's colour. */
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: var(--cream);
+  background:
+    radial-gradient(1200px 520px at 50% -160px, color-mix(in srgb, var(--accent) 13%, transparent), transparent 70%),
+    radial-gradient(circle at center, rgba(245, 239, 227, 0.045) 1px, transparent 1.4px) 0 0 / 28px 28px,
+    var(--ink);
+  font: 500 16px/1.55 var(--font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+p,
+ol,
+ul,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 0.18em;
+}
+
+strong {
+  font-weight: 700;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* ── Type ──────────────────────────────────────────────────────────────── */
+
+.display {
+  font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4.6rem);
+  font-weight: 900;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.title-xl {
+  font-size: clamp(1.9rem, 1.4rem + 1.8vw, 2.9rem);
+  font-weight: 900;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.lead {
+  font-size: clamp(1.05rem, 1rem + 0.3vw, 1.22rem);
+  line-height: 1.5;
+  color: var(--cream-dim);
+  max-width: 34em;
+  text-wrap: pretty;
+}
+
+/* The small caps line over a title, with the accent's bar beside it, as
+   the app's page titles have. */
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+.kicker::before {
+  content: "";
+  width: 4px;
+  height: 1.3em;
+  border-radius: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.note {
+  font-size: 0.92rem;
+  color: var(--cream-dim);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ── Helpers ───────────────────────────────────────────────────────────── */
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 700;
+  text-decoration: none;
+  transition: top var(--fast) var(--ease-out);
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+/* Sections that slide up as they come into view (modules/reveal.js). Only
+   with scripts: without them, nothing waits to be revealed. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--slow) var(--ease-out), transform var(--slow) var(--ease-out);
+}
+
+.js [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Reduce motion is honoured everywhere, as in the app: things arrive, they
+   don't travel. Modules ask lib/motion.js the same question. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── layout.css ── */
+/* The frame every page shares. */
+
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ── Header ────────────────────────────────────────────────────────────── */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--ink) 82%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  backdrop-filter: blur(14px) saturate(1.3);
+  border-bottom: 1px solid var(--line);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 64px;
+}
+
+/* HOP[Hop]N: the logo's letters with Hop for the O, as the app's header
+   draws it. Hop here is brand, so he is always the logo's yellow. */
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.55rem;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+  text-decoration: none;
+  line-height: 1;
+}
+
+.wordmark__hop {
+  width: 1.5em;
+  height: 1.5em;
+  margin: -0.28em -0.14em 0 -0.12em;
+  transition: transform var(--med) var(--ease-hop);
+}
+
+.wordmark:hover .wordmark__hop {
+  transform: translateY(-3px) rotate(-6deg);
+}
+
+.site-nav {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.site-nav__link {
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--cream-dim);
+  text-decoration: none;
+  transition: color var(--fast), background-color var(--fast);
+}
+
+.site-nav__link:hover {
+  color: var(--cream);
+  background: var(--line);
+}
+
+.site-nav__link[aria-current="page"] {
+  color: var(--cream);
+}
+
+@media (max-width: 720px) {
+  .site-nav {
+    display: none;
+  }
+
+  .site-header__cta {
+    margin-left: auto;
+  }
+}
+
+/* ── Footer ────────────────────────────────────────────────────────────── */
+
+.site-footer {
+  padding: 64px 0 48px;
+}
+
+.site-footer__receipt {
+  max-width: 420px;
+  margin-inline: auto;
+  transform: rotate(-1.2deg);
+}
+
+/* ── components/button.css ── */
+/* Buttons. What you press is the accent — the visitor's colour, as in the
+   app every button is the user's mascot colour. */
+
+.btn {
+  --btn-pad-y: 12px;
+  --btn-pad-x: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: var(--btn-pad-y) var(--btn-pad-x);
+  border: 0;
+  border-radius: var(--radius-pill);
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    transform var(--fast) var(--ease-out),
+    box-shadow var(--fast) var(--ease-out),
+    background-color var(--fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn--accent {
+  background: var(--accent);
+  color: var(--on-accent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.16),
+    0 8px 24px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+.btn--accent:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.16),
+    0 10px 32px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.btn--quiet {
+  background: rgba(245, 239, 227, 0.04);
+  color: var(--cream);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+}
+
+.btn--quiet:hover {
+  background: rgba(245, 239, 227, 0.08);
+}
+
+.btn--big {
+  --btn-pad-y: 16px;
+  --btn-pad-x: 26px;
+  font-size: 1.05rem;
+}
+
+.btn--small {
+  --btn-pad-y: 9px;
+  --btn-pad-x: 16px;
+  font-size: 0.9rem;
+}
+
+.btn__arrow {
+  display: inline-block;
+  transition: transform var(--fast) var(--ease-out);
+}
+
+.btn:hover .btn__arrow {
+  transform: translateX(3px);
+}
+
+/* A console key, like the live room's dock: a rounded block with a lip at
+   its foot that it presses down into. */
+.key {
+  display: inline-grid;
+  place-items: center;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  background: linear-gradient(var(--surface-high), var(--surface));
+  color: var(--cream);
+  box-shadow: 0 3px 0 #101015, var(--raised);
+  transition: transform 90ms ease-out, box-shadow 90ms ease-out, color var(--fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.key:hover {
+  color: var(--accent);
+}
+
+.key:active {
+  transform: translateY(3px);
+  box-shadow: 0 0 0 #101015, var(--raised);
+}
+
+.key svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ── components/hop.css ── */
+/* Hop (builder/hop.py draws him). Everything that colours him comes from
+   one custom property, --hop, mixed the way the painter mixes: the base
+   20% darker, the face from 20% lighter through his colour to a little
+   darker. Moods and the blink are here; where he looks is set by
+   modules/eyes.js through --look-x / --look-y (-1 to 1). */
+
+.hop {
+  --look-x: 0;
+  --look-y: 0;
+  overflow: visible;
+  color: color-mix(in srgb, var(--hop) 72%, #000);
+  /* His feet: the bottom of his body, 90.6% down the 160-high picture. A
+     squash or a hop pivots there, like a jelly landing. */
+  transform-origin: 50% 90.6%;
+}
+
+.hop__base {
+  fill: color-mix(in srgb, var(--hop) 80%, #000);
+}
+
+.hop__light {
+  stop-color: color-mix(in srgb, var(--hop) 80%, #fff);
+}
+
+.hop__mid {
+  stop-color: var(--hop);
+}
+
+.hop__low {
+  stop-color: color-mix(in srgb, var(--hop) 91%, #000);
+}
+
+.hop__stripe,
+.hop__band,
+.hop__neck {
+  fill: var(--hop);
+}
+
+.hop__hand {
+  fill: var(--hop);
+  stroke: color-mix(in srgb, var(--hop) 75%, #000);
+  stroke-width: 2.5;
+}
+
+/* ── Faces: all four are drawn, the mood shows one ─────────────────────── */
+
+.hop__face,
+.hop__outfit {
+  display: none;
+}
+
+.hop[data-mood="normal"] .hop__face--normal,
+.hop[data-mood="sad"] .hop__face--sad,
+.hop[data-mood="fierce"] .hop__face--fierce,
+.hop[data-mood="angry"] .hop__face--fierce,
+.hop[data-mood="away"] .hop__face--away,
+.hop[data-mood="angry"] .hop__outfit {
+  display: inline;
+}
+
+/* Angry, he takes everything off and changes into the jacket. */
+.hop[data-mood="angry"] .hop__worn,
+.hop[data-mood="angry"] .hop__cap,
+.hop[data-mood="angry"] .hop__shades {
+  display: none;
+}
+
+/* Away, he fades, the way the room draws someone who stepped out. */
+.hop[data-mood="away"] .hop__body {
+  opacity: 0.55;
+  filter: saturate(0.6);
+}
+
+/* ── Eyes: where he looks, and the blink ───────────────────────────────── */
+
+.hop__look {
+  transform: translate(calc(var(--look-x) * 5.5px), calc(var(--look-y) * 5px));
+  transition: transform 140ms linear;
+}
+
+.hop__eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hop-blink var(--blink-every, 5.4s) var(--blink-delay, 1.2s) infinite;
+}
+
+@keyframes hop-blink {
+  0%,
+  93%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  96% {
+    transform: scaleY(0.1);
+  }
+}
+
+/* ── What he does ──────────────────────────────────────────────────────── */
+
+/* A hop: up, and a squash as he lands. */
+.hop.is-hopping {
+  animation: hop-hop 520ms var(--ease-out);
+}
+
+@keyframes hop-hop {
+  0% {
+    transform: scale(1, 1);
+  }
+
+  15% {
+    transform: scale(1.12, 0.86);
+  }
+
+  45% {
+    transform: translateY(-26%) scale(0.94, 1.08);
+  }
+
+  75% {
+    transform: scale(1.1, 0.9);
+  }
+
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+/* Breathing while he waits: a squash so small it reads as alive. */
+.hop--idle {
+  animation: hop-idle 3.2s var(--idle-delay, 0s) ease-in-out infinite;
+}
+
+@keyframes hop-idle {
+  0%,
+  100% {
+    transform: scale(1, 1);
+  }
+
+  50% {
+    transform: scale(1.025, 0.97);
+  }
+}
+
+/* Angry: shaking, and leaning in. */
+.hop[data-mood="angry"] {
+  animation: hop-shake 180ms linear infinite;
+}
+
+@keyframes hop-shake {
+  0%,
+  100% {
+    transform: rotate(-5.7deg) translateX(0);
+  }
+
+  25% {
+    transform: rotate(-5.7deg) translateX(-2%);
+  }
+
+  75% {
+    transform: rotate(-5.7deg) translateX(2%);
+  }
+}
+
+/* Drumming the table, before the session starts. */
+.hop.is-drumming {
+  animation: hop-drum 240ms ease-in-out infinite;
+}
+
+@keyframes hop-drum {
+  0%,
+  100% {
+    transform: scale(1, 1);
+  }
+
+  50% {
+    transform: translateY(-5%) scale(0.97, 1.04);
+  }
+}
+
+/* ── components/bubble.css ── */
+/* Speech bubbles: cream paper, dark words, a tail — how the live room
+   shows a line someone typed. */
+
+.bubble {
+  position: relative;
+  display: inline-block;
+  padding: 9px 14px;
+  border-radius: 14px;
+  background: var(--cream);
+  color: var(--paper-ink);
+  font-weight: 700;
+  line-height: 1.25;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+}
+
+.bubble::after {
+  content: "";
+  position: absolute;
+  left: var(--tail-x, 50%);
+  bottom: -7px;
+  width: 14px;
+  height: 14px;
+  background: inherit;
+  border-radius: 0 0 4px 0;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+/* A line someone said: the speaker icon, as the room draws it. */
+.bubble--seat {
+  font-size: 0.86rem;
+  white-space: nowrap;
+  padding: 7px 12px 7px 30px;
+}
+
+.bubble--seat::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  transform: translateY(-50%);
+  background: currentColor;
+  -webkit-mask: var(--speaker) center / contain no-repeat;
+  mask: var(--speaker) center / contain no-repeat;
+  --speaker: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z'/%3E%3C/svg%3E");
+}
+
+.bubble.is-popping {
+  animation: bubble-pop 360ms var(--ease-hop) both;
+}
+
+.bubble.is-leaving {
+  animation: bubble-leave 220ms ease-in both;
+}
+
+@keyframes bubble-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.7);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes bubble-leave {
+  to {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.92);
+  }
+}
+
+.bubble--big {
+  padding: 16px 22px;
+  border-radius: 20px;
+  font-size: 1.15rem;
+}
+
+.bubble--big::after {
+  width: 18px;
+  height: 18px;
+  bottom: -9px;
+}
+
+/* ── components/pill.css ── */
+/* Small status pills: the room's LIVE timer, someone stepped away, a
+   squad's badge. */
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Someone stepped away: red, with the time they've been gone counting up. */
+.pill--away {
+  background: #ef4b4b;
+  color: #fff;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.3), 0 4px 14px rgba(239, 75, 75, 0.35);
+}
+
+.live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--live) 18%, var(--ink));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--live) 35%, transparent);
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.live-pill__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--live);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--live) 70%, transparent);
+  animation: live-dot 1.6s ease-out infinite;
+}
+
+.live-pill__time {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+@keyframes live-dot {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--live) 70%, transparent);
+  }
+
+  100% {
+    box-shadow: 0 0 0 9px transparent;
+  }
+}
+
+/* A squad's crest: initials on a rounded block in a colour, like the app's. */
+.squad-badge {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--blue) 85%, #fff), var(--blue));
+  box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.18);
+  color: #fff;
+  font-weight: 900;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
+/* ── components/phone.css ── */
+/* A phone round one of the app's screens (img/screens/, cut out of the
+   Play screenshots by tools/make_screens.py). The screen's own corners
+   are round with the drawn phone's dark showing outside them; this frame's
+   radius matches, so they never show. */
+
+.phone {
+  position: relative;
+  aspect-ratio: 712 / 1556;
+  padding: 2.4%;
+  border-radius: 14% / 6.4%;
+  background: linear-gradient(145deg, #3a3a46, #1a1a21 40%, #2c2c36);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 18px 40px rgba(0, 0, 0, 0.5);
+}
+
+.phone img {
+  width: 100%;
+  height: 100%;
+  border-radius: 12.4% / 5.7%;
+  background: var(--ink);
+}
+
+/* ── components/tv.css ── */
+/* The wall screen, as the live room draws it: a dark bezel, a screen with
+   diagonal stripes in a colour, NOW PLAYING over a picture or one line
+   shouted across it. modules/tv.js changes the channel, with the app's
+   flip: the picture squashes to a line, swaps at the middle, opens. */
+
+.tv {
+  --tv-dwell: 6s;
+  position: relative;
+  display: grid;
+  gap: 14px;
+}
+
+.tv__frame {
+  position: relative;
+  padding: 10px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #121217, #0b0b0f);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 30px 60px rgba(0, 0, 0, 0.55);
+}
+
+/* The screen lights the wall in its own colour. */
+.tv__frame::before {
+  content: "";
+  position: absolute;
+  inset: 8% 4%;
+  z-index: -1;
+  border-radius: 40px;
+  background: var(--tv-glow, var(--purple));
+  filter: blur(60px);
+  opacity: 0.32;
+  transition: background-color var(--slow);
+}
+
+.tv__screen {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #050507;
+  isolation: isolate;
+}
+
+/* Scan lines and the glass's sheen, over everything. */
+.tv__screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background:
+    linear-gradient(125deg, rgba(255, 255, 255, 0.09), transparent 32%),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0 1px, transparent 1px 3px);
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.55);
+}
+
+.tv__slides {
+  position: absolute;
+  inset: 0;
+  transform-origin: center;
+}
+
+/* ── A slide ───────────────────────────────────────────────────────────── */
+
+.tv-slide {
+  --slide: var(--purple);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-items: center;
+  padding: 6% 7%;
+  color: #fff;
+  background:
+    radial-gradient(120% 90% at 50% 40%, transparent 40%, rgba(0, 0, 0, 0.38)),
+    repeating-linear-gradient(
+      135deg,
+      var(--slide) 0 16px,
+      color-mix(in srgb, var(--slide) 82%, #000) 16px 32px
+    );
+}
+
+.tv-slide--purple { --slide: #6b4fc9; }
+.tv-slide--magenta { --slide: #b2347f; }
+.tv-slide--red { --slide: #c9342d; }
+.tv-slide--teal { --slide: #14897c; }
+.tv-slide--blue { --slide: #2f6fd1; }
+.tv-slide--green { --slide: #3b8a32; }
+.tv-slide--orange { --slide: #c96a1f; }
+.tv-slide--yellow { --slide: #c99419; }
+
+/* Without scripts the first slide is the screen. */
+.no-js .tv-slide:not(:first-child) {
+  display: none;
+}
+
+.js .tv-slide {
+  visibility: hidden;
+}
+
+.js .tv-slide.is-on {
+  visibility: visible;
+}
+
+/* One line, shouted: JAKE BUYS THE PIZZA. */
+.tv-slide--shout {
+  justify-items: center;
+  align-content: center;
+  gap: 0.6em;
+  text-align: center;
+}
+
+.tv-slide__shout {
+  font-size: clamp(1.7rem, 1rem + 3.2vw, 3.4rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  text-shadow:
+    0 3px 0 color-mix(in srgb, var(--slide) 45%, #000),
+    0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.tv-slide__small {
+  font-size: clamp(0.8rem, 0.7rem + 0.4vw, 1rem);
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+/* A screen of the app in a phone, NOW SHOWING beside it. */
+/* The row is the screen's height, so the phone's height is a share of it
+   and its width follows from its shape. */
+.tv-slide--phone {
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  gap: 6%;
+  padding-block: 4%;
+}
+
+.tv-slide--phone .phone {
+  height: 96%;
+  width: auto;
+  align-self: center;
+  transform: rotate(-3deg);
+}
+
+.tv-slide__text {
+  display: grid;
+  gap: 0.45em;
+  align-content: center;
+}
+
+.tv-slide__eyebrow {
+  font-size: clamp(0.62rem, 0.55rem + 0.25vw, 0.78rem);
+  font-weight: 900;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.tv-slide__title {
+  font-size: clamp(1.35rem, 0.9rem + 1.7vw, 2.4rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-shadow: 0 3px 0 color-mix(in srgb, var(--slide) 45%, #000);
+}
+
+.tv-slide__line {
+  font-size: clamp(0.8rem, 0.72rem + 0.35vw, 1.02rem);
+  font-weight: 500;
+  line-height: 1.4;
+  opacity: 0.92;
+  max-width: 22em;
+}
+
+/* A picture that fills the screen, with the words on its foot. */
+.tv-slide--wide {
+  padding: 0;
+  align-items: end;
+}
+
+.tv-slide__wide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tv-slide--wide .tv-slide__text {
+  position: relative;
+  padding: 6% 7%;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.75) 60%);
+}
+
+/* ── Changing the channel ──────────────────────────────────────────────── */
+
+.tv.is-switching .tv__slides {
+  animation: tv-flip 420ms var(--ease-out);
+}
+
+@keyframes tv-flip {
+  0% {
+    transform: scale(1, 1);
+    filter: none;
+  }
+
+  42%,
+  52% {
+    transform: scale(1.02, 0.008);
+    filter: brightness(4);
+  }
+
+  100% {
+    transform: scale(1, 1);
+    filter: none;
+  }
+}
+
+/* Static, for the instant between channels. */
+.tv__static {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  opacity: 0;
+  pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: screen;
+}
+
+.tv.is-switching .tv__static {
+  animation: tv-static 420ms steps(6);
+}
+
+@keyframes tv-static {
+  0% {
+    opacity: 0;
+    background-position: 0 0;
+  }
+
+  30%,
+  60% {
+    opacity: 0.55;
+  }
+
+  50% {
+    background-position: 40px 70px;
+  }
+
+  100% {
+    opacity: 0;
+    background-position: 90px 20px;
+  }
+}
+
+/* ON AIR in the corner; the channel shown for a moment after a change. */
+.tv__bug {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.45);
+  font-size: 0.66rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.tv__bug-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--live);
+  animation: live-dot 1.6s ease-out infinite;
+}
+
+.tv__osd {
+  position: absolute;
+  top: 12px;
+  left: 16px;
+  z-index: 6;
+  font: 700 clamp(0.75rem, 0.6rem + 0.5vw, 1rem) / 1 var(--font-mono);
+  letter-spacing: 0.08em;
+  color: #9dff9d;
+  text-shadow: 0 0 8px rgba(120, 255, 120, 0.7), 0 2px 0 rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: opacity var(--med);
+}
+
+.tv__osd.is-showing {
+  opacity: 1;
+  transition-duration: 0ms;
+}
+
+/* The channel and ON AIR would share the top on a narrow screen. */
+.tv__bug {
+  transition: opacity var(--med);
+}
+
+.tv__screen:has(.tv__osd.is-showing) .tv__bug {
+  opacity: 0;
+  transition-duration: 0ms;
+}
+
+.tv.is-paused .tv__bug::after {
+  content: "· paused";
+  letter-spacing: 0.08em;
+}
+
+/* ── The remote ────────────────────────────────────────────────────────── */
+
+.tv__remote {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.tv__icon-play,
+.tv.is-paused .tv__icon-pause {
+  display: none;
+}
+
+.tv.is-paused .tv__icon-play {
+  display: block;
+}
+
+.tv__dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 6px;
+}
+
+/* A channel: a short bar, filling while it is on. */
+.tv__dot {
+  position: relative;
+  width: 18px;
+  height: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background: var(--surface-high);
+  overflow: hidden;
+  transition: width var(--med) var(--ease-out), background-color var(--fast);
+}
+
+.tv__dot::before {
+  /* Bigger than the bar, so it is easy to hit. */
+  content: "";
+  position: absolute;
+  inset: -12px -3px;
+}
+
+.tv__dot:hover {
+  background: var(--cream-faint);
+}
+
+.tv__dot[aria-current="true"] {
+  width: 38px;
+}
+
+.tv__dot[aria-current="true"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--accent);
+  transform-origin: left;
+  animation: tv-dwell var(--tv-dwell) linear both;
+}
+
+.tv.is-paused .tv__dot[aria-current="true"]::after,
+.tv.is-held .tv__dot[aria-current="true"]::after {
+  animation-play-state: paused;
+}
+
+@keyframes tv-dwell {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (max-width: 560px) {
+  .tv__screen {
+    aspect-ratio: 4 / 3;
+  }
+
+  .tv__dot {
+    width: 10px;
+  }
+
+  .tv__dot[aria-current="true"] {
+    width: 26px;
+  }
+
+  .tv-slide--phone {
+    gap: 5%;
+    padding-inline: 5%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tv.is-switching .tv__slides,
+  .tv.is-switching .tv__static {
+    animation: none;
+  }
+}
+
+/* ── components/table.css ── */
+/* The squad's table: a round wooden top seen from the room, four seats,
+   and the session's red button in the middle under its glass. Seats are
+   placed in percentages of the table, so it scales as one picture. */
+
+.table {
+  position: relative;
+  width: 100%;
+  max-width: 660px;
+  margin: 72px auto 0;
+  aspect-ratio: 1.45;
+}
+
+/* Light on the floor under the table. */
+.table__floor {
+  position: absolute;
+  left: 2%;
+  right: 2%;
+  top: 46%;
+  height: 50%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--brass) 26%, transparent), transparent);
+  filter: blur(6px);
+}
+
+.table__top {
+  position: absolute;
+  left: 11%;
+  right: 11%;
+  top: 34%;
+  height: 40%;
+  filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.55));
+}
+
+.table__wood {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.table__rim {
+  fill: #191512;
+  stroke: var(--brass);
+  stroke-width: 2.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.table__face {
+  fill: #2a221c;
+}
+
+.table__ring {
+  fill: none;
+  stroke: rgba(201, 164, 86, 0.28);
+  stroke-width: 1.6;
+  vector-effect: non-scaling-stroke;
+}
+
+/* ── The seats ─────────────────────────────────────────────────────────── */
+
+.seat {
+  position: absolute;
+  z-index: 2;
+  width: 21%;
+  display: grid;
+  /* One fixed column: a pill wider than the seat hangs over both sides
+     instead of widening the seat, and with it the Hop. */
+  grid-template-columns: 100%;
+  justify-items: center;
+  gap: 2px;
+}
+
+.seat--back-left { left: 19%; top: 5%; }
+.seat--back-right { right: 19%; top: 5%; }
+.seat--front-left { left: 5%; top: 41%; }
+.seat--front-right { right: 5%; top: 41%; }
+
+.seat__hop {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  border-radius: 30%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.seat__hop .hop {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.45));
+}
+
+.seat__name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--cream-dim);
+}
+
+.seat--you .seat__name {
+  color: var(--cream);
+}
+
+.seat .pill {
+  margin-top: 2px;
+  font-size: 0.75rem;
+}
+
+/* Their line, over their head. Seats on the left say it to the right of
+   themselves and seats on the right to the left, so it stays on the
+   table. */
+.seat .bubble {
+  position: absolute;
+  bottom: calc(100% - 18%);
+  z-index: 3;
+  max-width: 220px;
+  white-space: normal;
+  width: max-content;
+}
+
+.seat--back-left .bubble,
+.seat--front-left .bubble {
+  left: 20%;
+  --tail-x: 24px;
+}
+
+.seat--back-right .bubble,
+.seat--front-right .bubble {
+  right: 20%;
+  --tail-x: calc(100% - 24px);
+}
+
+.seat--front-left .bubble,
+.seat--front-right .bubble {
+  bottom: calc(100% - 12%);
+}
+
+/* ── START ─────────────────────────────────────────────────────────────── */
+
+.start {
+  --hold: 0;
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 53%;
+  width: 21%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.start__plate {
+  padding: 3px 10px;
+  border-radius: 7px;
+  background: #121216;
+  box-shadow: inset 0 0 0 2px var(--live);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+}
+
+.start__base {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 40%, #2b2b33, #121216 70%);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.06), 0 10px 18px rgba(0, 0, 0, 0.5);
+}
+
+.start__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.start__ring circle {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-dasharray: 289.03;
+  stroke-dashoffset: calc((1 - var(--hold)) * 289.03);
+  opacity: calc(var(--hold) * 4);
+  filter: drop-shadow(0 0 6px var(--accent));
+}
+
+.start__button {
+  position: absolute;
+  inset: 22%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 30%, #ff8a7a, #e8362b 45%, #a8180f 100%);
+  box-shadow: inset 0 -5px 0 rgba(0, 0, 0, 0.28), 0 4px 0 #6d0f09;
+  transform: translateY(calc(var(--hold) * 3px));
+  transition: transform 90ms ease-out;
+}
+
+/* The glass over it, hinged at the back: it lifts as you hold. */
+.start__dome {
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.55), transparent 22%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.16) 70%, rgba(255, 255, 255, 0.28));
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.28);
+  transform-origin: 50% 0;
+  transform: perspective(200px) rotateX(calc(var(--hold) * 62deg)) translateY(calc(var(--hold) * -12%));
+  opacity: calc(1 - var(--hold) * 0.5);
+}
+
+.start:hover .start__button {
+  filter: brightness(1.08);
+}
+
+.start.is-holding .start__plate {
+  background: var(--live);
+}
+
+.table__hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 84%;
+  z-index: 1;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--cream-faint);
+  transition: color var(--fast);
+}
+
+.table__hint strong {
+  color: var(--cream-dim);
+  letter-spacing: 0.06em;
+}
+
+.table__hint.is-nudging {
+  color: var(--cream);
+  animation: hint-nudge 400ms var(--ease-hop);
+}
+
+@keyframes hint-nudge {
+  30% {
+    transform: translateX(-6px);
+  }
+
+  60% {
+    transform: translateX(5px);
+  }
+}
+
+@media (max-width: 560px) {
+  .table {
+    margin-top: 64px;
+  }
+
+  .seat .bubble {
+    max-width: 150px;
+    font-size: 0.78rem;
+  }
+
+  .seat__name {
+    font-size: 0.78rem;
+  }
+
+  .start__plate {
+    font-size: 0.62rem;
+    padding: 2px 7px;
+  }
+}
+
+/* ── components/say.css ── */
+/* "Type it. The squad hears it." — the live room's line, with your Hop at
+   its left (which also opens the colour picker). */
+
+.say {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 720px;
+  margin-inline: auto;
+  padding: 7px 7px 7px 10px;
+  border-radius: var(--radius-pill);
+  background: #0f0f14;
+  box-shadow: inset 0 0 0 1px var(--line-strong), 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* What you said, over the little you as well: the table may be scrolled
+   out of sight while you type. */
+.say__bubble {
+  position: absolute;
+  left: 8px;
+  bottom: calc(100% + 10px);
+  z-index: 9;
+  max-width: min(420px, 90%);
+  white-space: normal;
+  --tail-x: 26px;
+}
+
+.say__me {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--surface);
+  transition: transform var(--fast) var(--ease-hop);
+}
+
+.say__me:hover {
+  transform: rotate(-8deg) scale(1.06);
+}
+
+.say__me .hop {
+  width: 40px;
+  height: 40px;
+  margin-top: 2px;
+}
+
+.say__input {
+  flex: 1;
+  min-width: 0;
+  height: 46px;
+  padding: 0 6px;
+  border: 0;
+  background: transparent;
+  font-size: 1.02rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  outline: none;
+}
+
+.say__input::placeholder {
+  color: var(--cream-faint);
+}
+
+.say:focus-within {
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--accent) 65%, transparent), 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.say__send {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.16), 0 6px 18px color-mix(in srgb, var(--accent) 35%, transparent);
+  transition: transform var(--fast) var(--ease-hop);
+}
+
+.say__send:active {
+  transform: scale(0.9);
+}
+
+.say__send svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ── Your colour ───────────────────────────────────────────────────────── */
+
+.colours {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 12px);
+  z-index: 10;
+  padding: 14px;
+  border-radius: 20px;
+  background: var(--surface-high);
+  box-shadow: inset 0 0 0 1px var(--line-strong), 0 20px 40px rgba(0, 0, 0, 0.5);
+  animation: bubble-pop 280ms var(--ease-hop) both;
+  transform-origin: 24px 100%;
+}
+
+.colours__label {
+  margin-bottom: 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--cream-dim);
+}
+
+.colours__row {
+  display: grid;
+  grid-template-columns: repeat(8, 32px);
+  gap: 8px;
+}
+
+.colours__swatch {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--swatch) 80%, #fff), var(--swatch) 60%);
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.2);
+  transition: transform var(--fast) var(--ease-hop);
+}
+
+.colours__swatch:hover {
+  transform: translateY(-2px);
+}
+
+.colours__swatch[aria-pressed="true"] {
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px var(--surface-high), 0 0 0 4px var(--cream);
+}
+
+@media (max-width: 420px) {
+  .colours__row {
+    grid-template-columns: repeat(4, 36px);
+  }
+
+  .colours__swatch {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* ── components/receipt.css ── */
+/* Thermal paper, as the app prints a session's receipt: cream, monospace,
+   dashed rules, torn teeth top and bottom. The footer is one; the alpha
+   pass is cut from the same roll. */
+
+.receipt {
+  --tooth: 12px;
+  position: relative;
+  padding: 30px 26px;
+  background: var(--paper);
+  color: var(--paper-ink);
+  font: 500 0.82rem / 1.6 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-align: center;
+  filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.45));
+  -webkit-mask:
+    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / var(--tooth) 51% repeat-x,
+    conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top / var(--tooth) 51% repeat-x;
+  mask:
+    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / var(--tooth) 51% repeat-x,
+    conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top / var(--tooth) 51% repeat-x;
+}
+
+.receipt a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.receipt a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.receipt__title {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.receipt__small {
+  font-size: 0.72rem;
+  color: var(--paper-dim);
+}
+
+.receipt__rule {
+  margin: 16px 0;
+  border: 0;
+  border-top: 2px dashed rgba(29, 28, 34, 0.35);
+}
+
+.receipt__rows {
+  display: grid;
+  gap: 8px;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+/* LABEL ....... VALUE */
+.receipt__rows li {
+  display: flex;
+  align-items: baseline;
+}
+
+.receipt__rows li::after {
+  content: "";
+  order: 1;
+  flex: 1;
+  min-width: 12px;
+  margin: 0 8px;
+  border-bottom: 2px dotted rgba(29, 28, 34, 0.3);
+}
+
+.receipt__rows span {
+  order: 2;
+  color: var(--paper-dim);
+  white-space: nowrap;
+}
+
+.receipt__thanks {
+  margin-top: 14px;
+  font-weight: 700;
+}
+
+.receipt__by {
+  margin-top: 4px;
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  color: var(--paper-dim);
+}
+
+.receipt__by a {
+  text-decoration: underline;
+}
+
+/* ── components/prose.css ── */
+/* Long text: the policy, the terms, the deletion page. One narrow column
+   at a comfortable size, and tables that scroll sideways on a phone
+   instead of the page. */
+
+.prose {
+  max-width: 46rem;
+  font-size: 1.04rem;
+  line-height: 1.7;
+  color: color-mix(in srgb, var(--cream) 88%, var(--cream-dim));
+}
+
+.prose > * + * {
+  margin-top: 1rem;
+}
+
+.prose h2 {
+  margin-top: 2.6rem;
+  font-size: 1.45rem;
+  font-weight: 900;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--cream);
+  scroll-margin-top: 88px;
+}
+
+.prose h3 {
+  margin-top: 1.8rem;
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: var(--cream);
+  scroll-margin-top: 88px;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.4rem;
+}
+
+.prose li + li {
+  margin-top: 0.4rem;
+}
+
+.prose li::marker {
+  color: var(--accent);
+}
+
+.prose hr {
+  margin: 2.6rem 0;
+  border: 0;
+  border-top: 1px solid var(--line-strong);
+}
+
+.prose strong {
+  color: var(--cream);
+}
+
+.prose a {
+  word-break: break-word;
+}
+
+.prose__contents {
+  margin-top: 1.6rem;
+  padding: 18px 22px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.prose__contents > p {
+  margin-bottom: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+/* The headings carry their own numbers ("1. Who is responsible…"), so the
+   list doesn't add any. */
+.prose__contents ol {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  columns: 2;
+  column-gap: 2rem;
+  font-size: 0.95rem;
+}
+
+.prose__contents li {
+  break-inside: avoid;
+}
+
+.prose__contents a {
+  text-decoration: none;
+}
+
+.prose__contents a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 560px) {
+  .prose__contents ol {
+    columns: 1;
+  }
+}
+
+.prose__table {
+  overflow-x: auto;
+  border-radius: var(--radius);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+}
+
+.prose table {
+  width: 100%;
+  min-width: 30rem;
+  border-collapse: collapse;
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.prose th,
+.prose td {
+  padding: 0.75rem 0.95rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.prose th {
+  background: var(--surface);
+  color: var(--cream);
+  font-weight: 700;
+}
+
+.prose tr:last-child td {
+  border-bottom: 0;
+}
+
+.prose__action {
+  margin: 1.4rem 0;
+}
+
+.prose__draft {
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-s);
+  background: #b3261e;
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ── pages/home.css ── */
+/* The front page: the room, tonight's guide, and the alpha's band. */
+
+/* ── The room ──────────────────────────────────────────────────────────── */
+
+.room {
+  position: relative;
+  padding: 18px 0 40px;
+  background: linear-gradient(180deg, rgba(92, 64, 140, 0.16), transparent 55%);
+  overflow: clip;
+}
+
+/* The floor: a gold skirting line, and boards running away from you. */
+.room::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--floor, 52%);
+  border-top: 1px solid rgba(201, 164, 86, 0.22);
+  background:
+    linear-gradient(rgba(201, 164, 86, 0.06), transparent 30%),
+    repeating-conic-gradient(from 170deg at 50% -40%, rgba(245, 239, 227, 0.035) 0 0.35deg, transparent 0.35deg 5deg);
+  pointer-events: none;
+}
+
+.room > * {
+  position: relative;
+}
+
+.room__bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 26px;
+}
+
+.room__name {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.room__bar .live-pill {
+  margin-left: auto;
+}
+
+/* As the app's room: the screen on the wall, the table on the floor in
+   front of it. The words hang on the wall beside the screen. */
+.room__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  grid-template-areas:
+    "intro wall"
+    "table table";
+  column-gap: clamp(28px, 4.5vw, 72px);
+  align-items: center;
+}
+
+.room__intro {
+  grid-area: intro;
+  display: grid;
+  gap: 22px;
+  justify-items: start;
+}
+
+.room__stage > .table {
+  grid-area: table;
+}
+
+.room__wall {
+  grid-area: wall;
+  position: relative;
+  padding-top: 56px;
+}
+
+.room__dock {
+  margin-top: 36px;
+}
+
+@media (max-width: 980px) {
+  .room__stage {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "intro"
+      "wall"
+      "table";
+    row-gap: 8px;
+  }
+
+  .room__wall {
+    max-width: 640px;
+    width: 100%;
+    margin-inline: auto;
+    padding-top: 64px;
+  }
+}
+
+@media (max-width: 560px) {
+  .room__bar .room__name {
+    font-size: 1rem;
+  }
+
+  .room__intro .actions .btn {
+    flex: 1 1 auto;
+  }
+}
+
+/* ── On the wall: a shelf, and the hot potato on its cord ──────────────── */
+
+.wall-deco {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.wall-deco__shelf {
+  position: absolute;
+  left: 2%;
+  top: 6px;
+  width: 92px;
+  opacity: 0.9;
+}
+
+.potato {
+  position: absolute;
+  right: -6px;
+  top: -18px;
+  z-index: 2;
+  width: 52px;
+  padding: 0;
+  border: 0;
+  background: none;
+  display: grid;
+  justify-items: center;
+  pointer-events: auto;
+  transform-origin: 50% 0;
+  animation: potato-sway 3.6s ease-in-out infinite alternate;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.potato__cord {
+  width: 2px;
+  height: 60px;
+  background: linear-gradient(#000 0, #c9a456 30%, #8a6a32);
+}
+
+.potato__body {
+  width: 52px;
+  margin-top: -4px;
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.5));
+}
+
+.potato.is-hot {
+  animation: potato-toss 900ms var(--ease-out);
+}
+
+.potato.is-hot .potato__body {
+  animation: potato-sizzle 120ms linear 6;
+}
+
+@keyframes potato-sway {
+  from {
+    transform: rotate(-5deg);
+  }
+
+  to {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes potato-toss {
+  0% {
+    transform: rotate(0);
+  }
+
+  20% {
+    transform: rotate(38deg);
+  }
+
+  45% {
+    transform: rotate(-26deg);
+  }
+
+  70% {
+    transform: rotate(14deg);
+  }
+
+  100% {
+    transform: rotate(0);
+  }
+}
+
+@keyframes potato-sizzle {
+  50% {
+    transform: translate(1px, -1px);
+    filter: drop-shadow(0 0 10px rgba(255, 120, 40, 0.9));
+  }
+}
+
+/* ── Tonight on HopOn ──────────────────────────────────────────────────── */
+
+.tonight {
+  padding-top: 104px;
+}
+
+.section-head {
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+  margin-bottom: 36px;
+}
+
+.guide {
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line-strong);
+}
+
+.guide__row {
+  display: grid;
+  grid-template-columns: 120px 64px minmax(0, 1fr) auto;
+  grid-template-areas: "time hop body tune";
+  align-items: center;
+  column-gap: 24px;
+  padding: 22px 8px;
+  border-bottom: 1px solid var(--line-strong);
+  transition: background-color var(--med);
+}
+
+.guide__row:hover {
+  background: rgba(245, 239, 227, 0.025);
+}
+
+.guide__time {
+  grid-area: time;
+  font: 700 0.9rem / 1 var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--cream-dim);
+}
+
+.guide__hop {
+  grid-area: hop;
+}
+
+.guide__hop .hop {
+  width: 64px;
+  height: 64px;
+  transition: transform var(--med) var(--ease-hop);
+}
+
+.guide__row:hover .guide__hop .hop {
+  transform: translateY(-4px) rotate(-6deg);
+}
+
+.guide__body {
+  grid-area: body;
+  display: grid;
+  gap: 4px;
+}
+
+.guide__title {
+  font-size: 1.3rem;
+  font-weight: 900;
+  letter-spacing: -0.015em;
+}
+
+.guide__body p {
+  color: var(--cream-dim);
+  max-width: 44em;
+}
+
+.guide__tune {
+  grid-area: tune;
+  padding: 9px 16px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: rgba(245, 239, 227, 0.05);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+  font-size: 0.88rem;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background-color var(--fast), color var(--fast);
+}
+
+.guide__tune:hover {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+@media (max-width: 720px) {
+  .guide__row {
+    grid-template-columns: 52px minmax(0, 1fr);
+    grid-template-areas:
+      "hop time"
+      "hop body"
+      "hop tune";
+    row-gap: 6px;
+    column-gap: 16px;
+    align-items: start;
+  }
+
+  .guide__hop .hop {
+    width: 52px;
+    height: 52px;
+  }
+
+  .guide__tune {
+    justify-self: start;
+    margin-top: 6px;
+  }
+}
+
+/* ── The alpha's band ──────────────────────────────────────────────────── */
+
+.alpha-band {
+  padding-top: 72px;
+}
+
+.alpha-band__card {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(24px, 5vw, 64px);
+  padding: clamp(28px, 5vw, 56px);
+  border-radius: 32px;
+  background:
+    radial-gradient(520px 320px at 12% 50%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%),
+    var(--surface);
+  box-shadow: inset 0 0 0 1px var(--line-strong), 0 30px 60px rgba(0, 0, 0, 0.3);
+}
+
+.alpha-band__hop .hop {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 20px 26px rgba(0, 0, 0, 0.45));
+}
+
+.alpha-band__text {
+  display: grid;
+  gap: 16px;
+  justify-items: start;
+}
+
+@media (max-width: 640px) {
+  .alpha-band__card {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+
+  .alpha-band__hop {
+    width: 120px;
+  }
+}
+
+/* ── pages/beta.css ── */
+/* The closed alpha's welcome: Hop and his news, the two taps, the pass. */
+
+.alpha {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  grid-template-areas:
+    "welcome pass"
+    "journey journey";
+  column-gap: clamp(32px, 5vw, 72px);
+  row-gap: 40px;
+  padding-top: 32px;
+}
+
+.welcome { grid-area: welcome; }
+.journey { grid-area: journey; }
+.pass { grid-area: pass; }
+
+@media (max-width: 900px) {
+  .alpha {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "welcome"
+      "journey"
+      "pass";
+    row-gap: 32px;
+    padding-top: 20px;
+  }
+}
+
+/* ── Hop's news ────────────────────────────────────────────────────────── */
+
+.welcome {
+  display: grid;
+  gap: 18px;
+}
+
+.welcome__stage {
+  position: relative;
+  height: 260px;
+}
+
+/* A spotlight on the floor where he lands. */
+.welcome__spot {
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+  width: 240px;
+  height: 46px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 34%, transparent), transparent);
+}
+
+.welcome__hop {
+  position: absolute;
+  left: 10px;
+  bottom: 0;
+  width: 220px;
+  padding: 0;
+  border: 0;
+  background: none;
+  border-radius: 30%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.welcome__hop .hop {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.45));
+}
+
+.welcome__bubble {
+  position: absolute;
+  left: 230px;
+  top: 6px;
+  display: grid;
+  gap: 2px;
+  min-width: 250px;
+  --tail-x: 30px;
+}
+
+/* Its tail on its left edge, pointing back at him. */
+.welcome__bubble::after {
+  left: 0;
+  bottom: auto;
+  top: 64%;
+  border-radius: 0 0 0 4px;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.welcome__line {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 700;
+  min-height: 1.3em;
+}
+
+.welcome__line--big {
+  font-size: 1.75rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.welcome__text {
+  display: grid;
+  gap: 16px;
+  justify-items: start;
+}
+
+/* The scene, played by modules/welcome.js: he drops in, the words type
+   out, and on "G" the shades come down and the pass is stamped. Until it
+   starts, what it brings on is kept out of sight, so nothing shows and
+   then jumps. Without scripts, or with Reduce motion, all of it is simply
+   there. */
+@media (prefers-reduced-motion: no-preference) {
+  .js .welcome:not(.is-playing) .welcome__hop,
+  .js .welcome:not(.is-talking) .welcome__bubble,
+  .js .pass__stamp:not(.is-stamped) {
+    opacity: 0;
+  }
+
+  .js .welcome:not(.has-shades) .hop__shades {
+    transform: translateY(-90px);
+    opacity: 0;
+  }
+}
+
+/* Its own class, taken off once he's down: left on, any later animation
+   of his (a hop) would hand back to this one, and he'd drop in again. */
+.welcome.is-landing .welcome__hop .hop {
+  animation: hop-land 800ms var(--ease-out) both;
+}
+
+.welcome.is-talking .welcome__bubble {
+  animation: bubble-pop 360ms var(--ease-hop) both;
+}
+
+.welcome.has-shades .hop__shades {
+  transition: transform 520ms var(--ease-hop), opacity 120ms;
+}
+
+@keyframes hop-land {
+  0% {
+    transform: translateY(-140%) scale(0.9, 1.12);
+  }
+
+  55% {
+    transform: translateY(0) scale(0.95, 1.06);
+  }
+
+  70% {
+    transform: scale(1.18, 0.8);
+  }
+
+  86% {
+    transform: scale(0.96, 1.04);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .welcome__stage {
+    height: 190px;
+  }
+
+  .welcome__hop {
+    width: 150px;
+    left: 0;
+  }
+
+  .welcome__spot {
+    width: 170px;
+  }
+
+  .welcome__bubble {
+    left: 150px;
+    top: 0;
+    right: 0;
+    min-width: 0;
+    padding: 12px 16px;
+  }
+
+  .welcome__line {
+    font-size: 0.92rem;
+  }
+
+  .welcome__line--big {
+    font-size: 1.3rem;
+  }
+}
+
+/* ── The two taps ──────────────────────────────────────────────────────── */
+
+.journey {
+  padding: clamp(22px, 4vw, 40px);
+  border-radius: 28px;
+  background:
+    radial-gradient(600px 240px at 50% 0%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 70%),
+    var(--surface);
+  box-shadow: inset 0 0 0 1px var(--line-strong), 0 30px 60px rgba(0, 0, 0, 0.3);
+}
+
+.journey__head {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.journey__title {
+  font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.2rem);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+.journey__sub {
+  color: var(--cream-dim);
+}
+
+/* The track: a dashed path with three stops and Hop on yours. Its
+   numbers line up with the path's: the stops sit where it touches down
+   (25, 150 and 275 of 300 across), and its foot is 92px down. */
+.track {
+  --at: 0;
+  position: relative;
+  height: 140px;
+  margin: 0 auto 10px;
+  max-width: 620px;
+}
+
+.track__path {
+  position: absolute;
+  left: 0;
+  top: 62px;
+  width: 100%;
+  height: 40px;
+  overflow: visible;
+}
+
+.track__path path {
+  fill: none;
+  stroke: var(--cream-faint);
+  stroke-width: 3;
+  stroke-dasharray: 2 9;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* The way walked so far: the same path, solid, cut off where you are. Its
+   box runs from the first stop to the last, so half of it is one stop. */
+.track__path .track__done {
+  stroke: var(--accent);
+  stroke-dasharray: none;
+  clip-path: inset(-10px calc((1 - var(--at) / 2) * 100%) -10px 0);
+  transition: clip-path 700ms var(--ease-out);
+}
+
+.track__stop {
+  position: absolute;
+  top: 80px;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  transform: translateX(-50%);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.track__stop[data-stop="0"] { left: 8.333%; }
+.track__stop[data-stop="1"] { left: 50%; }
+.track__stop[data-stop="2"] { left: 91.667%; }
+
+.track__dot {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 3px var(--cream-faint);
+  transition: background-color var(--med), box-shadow var(--med);
+}
+
+.track__label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--cream-faint);
+  white-space: nowrap;
+  transition: color var(--med);
+}
+
+.track__stop.is-done .track__dot {
+  background: var(--accent);
+  box-shadow: none;
+}
+
+.track__stop.is-done .track__dot::after {
+  content: "";
+  width: 10px;
+  height: 6px;
+  margin-top: -3px;
+  border-left: 3px solid var(--on-accent);
+  border-bottom: 3px solid var(--on-accent);
+  transform: rotate(-45deg);
+}
+
+.track__stop.is-done .track__label {
+  color: var(--cream-dim);
+}
+
+.track__stop.is-current .track__dot {
+  box-shadow: inset 0 0 0 3px var(--accent), 0 0 0 6px color-mix(in srgb, var(--accent) 22%, transparent);
+  animation: stop-pulse 1.8s ease-out infinite;
+}
+
+.track__stop.is-current .track__label {
+  color: var(--cream);
+}
+
+@keyframes stop-pulse {
+  0% {
+    box-shadow: inset 0 0 0 3px var(--accent), 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+
+  100% {
+    box-shadow: inset 0 0 0 3px var(--accent), 0 0 0 14px transparent;
+  }
+}
+
+/* Hop stands on your stop. Moving, he hops there (modules/journey.js). */
+.track__runner {
+  position: absolute;
+  top: 12px;
+  left: calc(8.333% + var(--at) * 41.667%);
+  width: 76px;
+  transform: translateX(-50%);
+  transition: left 700ms var(--ease-out);
+}
+
+.track__runner .hop {
+  width: 100%;
+  height: auto;
+}
+
+.track__runner.is-jumping .hop {
+  animation: runner-jump 700ms var(--ease-out);
+}
+
+@keyframes runner-jump {
+  0% {
+    transform: scale(1.1, 0.88);
+  }
+
+  20% {
+    transform: translateY(-30%) scale(0.92, 1.1) rotate(-8deg);
+  }
+
+  50% {
+    transform: translateY(-55%) scale(0.95, 1.05) rotate(6deg);
+  }
+
+  80% {
+    transform: translateY(0) scale(1.14, 0.86);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+.track__cheer {
+  position: absolute;
+  bottom: calc(100% - 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 0.82rem;
+  padding: 6px 11px;
+}
+
+@media (max-width: 560px) {
+  .track__label {
+    font-size: 0.72rem;
+  }
+
+  .track__runner {
+    width: 60px;
+    top: 26px;
+  }
+}
+
+/* One tap, as a card: what it is, and the button. */
+.moves {
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 14px;
+}
+
+.move {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+  padding: 22px;
+  border-radius: 22px;
+  background: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+}
+
+.move.is-entering {
+  animation: move-in 460ms var(--ease-out) both;
+}
+
+@keyframes move-in {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.move__badge {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  color: var(--accent);
+}
+
+.move__badge svg {
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
+}
+
+.move--in .move__badge {
+  background: color-mix(in srgb, var(--green) 18%, transparent);
+  color: var(--green);
+}
+
+.move--in .move__badge svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.move__body {
+  display: grid;
+  gap: 4px;
+}
+
+.move__eyebrow {
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.move--in .move__eyebrow {
+  color: var(--green);
+}
+
+.move__title {
+  font-size: 1.3rem;
+  font-weight: 900;
+  letter-spacing: -0.015em;
+}
+
+.move__what {
+  color: var(--cream-dim);
+  max-width: 34em;
+}
+
+.move__what strong {
+  color: var(--cream);
+}
+
+.move__do {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+}
+
+.move__skip {
+  padding: 4px 8px;
+  border: 0;
+  background: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--cream-faint);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.move__skip:hover {
+  color: var(--cream-dim);
+}
+
+@media (max-width: 720px) {
+  .move {
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 14px 16px;
+    padding: 18px;
+  }
+
+  .move__badge {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    align-self: start;
+  }
+
+  .move__do {
+    grid-column: 1 / -1;
+  }
+
+  .move__go {
+    width: 100%;
+  }
+}
+
+/* ── The pass ──────────────────────────────────────────────────────────── */
+
+.pass {
+  position: relative;
+  align-self: center;
+  justify-self: center;
+  width: 100%;
+  max-width: 300px;
+  transform: rotate(3deg);
+}
+
+.pass__rows {
+  display: grid;
+  gap: 6px;
+  text-align: left;
+}
+
+.pass__rows div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pass__rows dt {
+  color: var(--paper-dim);
+}
+
+.pass__rows dd {
+  font-weight: 700;
+  text-align: right;
+}
+
+/* A barcode that scans to nothing. */
+.pass__code {
+  height: 46px;
+  margin: 0 8px 12px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--paper-ink) 0 2px,
+    transparent 2px 4px,
+    var(--paper-ink) 4px 7px,
+    transparent 7px 8px,
+    var(--paper-ink) 8px 9px,
+    transparent 9px 12px,
+    var(--paper-ink) 12px 13px,
+    transparent 13px 16px
+  );
+}
+
+/* The stamp, in court-red ink: it comes down with a thud when Hop says G. */
+.pass__stamp {
+  position: absolute;
+  right: -22px;
+  top: 58%;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  border: 4px double #d23a32;
+  color: #d23a32;
+  font: 700 0.6rem / 1 var(--font-mono);
+  letter-spacing: 0.14em;
+  transform: rotate(-16deg);
+  mix-blend-mode: multiply;
+  opacity: 0.88;
+}
+
+.pass__stamp b {
+  font: 900 3rem / 0.95 var(--font);
+  letter-spacing: 0;
+}
+
+.pass__stamp.is-stamping {
+  animation: stamp-thud 420ms cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+
+@keyframes stamp-thud {
+  0% {
+    opacity: 0;
+    transform: rotate(-30deg) scale(2.4);
+  }
+
+  70% {
+    opacity: 0.9;
+    transform: rotate(-14deg) scale(0.92);
+  }
+
+  100% {
+    opacity: 0.88;
+    transform: rotate(-16deg) scale(1);
+  }
+}
+
+@media (max-width: 900px) {
+  .pass {
+    max-width: 280px;
+    transform: rotate(-2deg);
+  }
+}
+
+/* ── Good to know ──────────────────────────────────────────────────────── */
+
+.aside-notes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding-top: 40px;
+}
+
+.aside-note {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px 16px 14px;
+  border-radius: 20px;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--line);
+  color: var(--cream-dim);
+}
+
+.aside-note strong {
+  color: var(--cream);
+}
+
+.aside-note__hop .hop {
+  width: 56px;
+  height: 56px;
+}
+
+@media (max-width: 720px) {
+  .aside-notes {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ── pages/legal.css ── */
+/* The policy, the terms and the deletion page: a title with Hop beside it,
+   in the court's serif — the face of a legal document — then the text. */
+
+.legal {
+  padding-top: 48px;
+}
+
+.legal__head {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  max-width: 46rem;
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.legal__head > div {
+  display: grid;
+  gap: 10px;
+}
+
+.legal__hop .hop {
+  width: 84px;
+  height: 84px;
+}
+
+.legal__title {
+  font: 700 clamp(2rem, 1.5rem + 2vw, 3rem) / 1.08 var(--font-serif);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+@media (max-width: 560px) {
+  .legal {
+    padding-top: 28px;
+  }
+
+  .legal__hop .hop {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* ── pages/lost.css ── */
+/* 404: a sad Hop, and the way back. */
+
+.lost {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  padding-block: 72px 24px;
+  text-align: center;
+}
+
+.lost .lead {
+  margin-inline: auto;
+}
+
+.lost .actions {
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.lost__hop {
+  width: 170px;
+  padding: 0;
+  border: 0;
+  background: none;
+  border-radius: 30%;
+}
+
+.lost__hop .hop {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.45));
+}

@@ -1,36 +1,406 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HopOn</title>
-<meta name="description" content="HopOn, by HopOn Studio.">
-<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HopOn · Summon your squad in one tap</title>
+<meta name="description" content="The app for friends who game together: summon the squad, see who is actually coming, run the night from one room, and put the ghosts on trial.">
+<meta name="theme-color" content="#15151B">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://hoponstudio.github.io/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/icon-512.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HopOn">
+<meta property="og:title" content="HopOn · Summon your squad in one tap">
+<meta property="og:description" content="The app for friends who game together: summon the squad, see who is actually coming, run the night from one room, and put the ghosts on trial.">
+<meta property="og:url" content="https://hoponstudio.github.io/">
+<meta property="og:image" content="https://hoponstudio.github.io/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="assets/fonts/roboto-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/roboto-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css?v=163ad758ec">
+<!-- Before the first paint: the visitor's colour (so "You" is never
+     yellow first, then theirs), and the class that says scripts run. -->
+<script>
+  (function (root) {
+    root.className = root.className.replace('no-js', 'js');
+    try {
+      var you = localStorage.getItem('hopon.you');
+      if (/^#[0-9a-f]{6}$/i.test(you)) root.style.setProperty('--you', you);
+    } catch (e) {}
+  })(document.documentElement);
+</script>
+<script type="module" src="assets/js/main.js?v=921431b8e6"></script>
 </head>
-<body>
-<header>
-  <a class="mark" href="">HOP<span>ON</span></a>
-  <nav>
-    <a href="beta/">Get the beta</a>
-    <a href="privacy/">Privacy Policy</a>
-    <a href="terms/">Terms of Use</a>
-    <a href="delete-account/">Delete your account</a>
-  </nav>
+<body class="page page--home">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="site-header__inner wrap">
+    <a class="wordmark" href="" aria-label="HopOn, home">
+      <span aria-hidden="true">HOP</span><svg class="hop wordmark__hop" viewBox="-80 -95 160 160" data-mood="normal" data-skin="headset" style="--hop:#FFC83D" aria-hidden="true" focusable="false"><g class="hop__body"><g class="hop__worn"><path d="M-58.11,-16.92 A60,60 0 0 1 58.11,-16.92" fill="none" stroke="#1C1C23" stroke-width="7.5" stroke-linecap="round"/></g><defs><linearGradient id="hop13-face" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="hop__light"/><stop offset=".55" class="hop__mid"/><stop offset="1" class="hop__low"/></linearGradient></defs><rect x="-50" y="-50" width="100" height="100" rx="30" class="hop__base"/><rect x="-50" y="-50" width="100" height="93" rx="30" fill="url(#hop13-face)"/><path d="M-41,-10 Q-41,-43 -8,-45 Q0,-44 -7,-39 Q-33,-35 -37,-10 Z" fill="#FFFFFF" fill-opacity=".34"/><g class="hop__face hop__face--normal"><g class="hop__look"><rect x="-25" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/><rect x="3" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/></g></g><g class="hop__face hop__face--sad"><rect x="-27" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="-23.88" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="-18.91" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="-10.74" cy="6.12" r="1.6" fill="#FFF"/><rect x="3" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="6.12" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="11.09" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="19.26" cy="6.12" r="1.6" fill="#FFF"/><path d="M-27,-15 L-8,-21 M27,-15 L8,-21" class="hop__brow" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__face hop__face--fierce"><path d="M-29,-7 L-7,2 L-7,9 Q-7,13 -12,13 L-25,13 Q-29,13 -29,9 ZM29,-7 L7,2 L7,9 Q7,13 12,13 L25,13 Q29,13 29,9 Z" fill="#FAFAFA" stroke="#FAFAFA" stroke-width="5" stroke-linejoin="round"/></g><g class="hop__face hop__face--away"><path d="M-24,4 L-6,4 M6,4 L24,4" class="hop__dash" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__worn"><rect x="-64" y="-17" width="18" height="36" rx="8" fill="#1C1C23"/><rect x="-61.3" y="-10" width="3.6" height="22" rx="1.8" class="hop__stripe"/><rect x="46" y="-17" width="18" height="36" rx="8" fill="#1C1C23"/><rect x="57.7" y="-10" width="3.6" height="22" rx="1.8" class="hop__stripe"/><path d="M52,17 Q50,37 27,37" fill="none" stroke="#1C1C23" stroke-width="4.5" stroke-linecap="round"/><rect x="10" y="31.5" width="19" height="11" rx="5.5" fill="#1C1C23"/></g></g></svg><span aria-hidden="true">N</span>
+    </a>
+    <nav class="site-nav" aria-label="Site">
+      <a class="site-nav__link" href="" aria-current="page">The room</a>
+      <a class="site-nav__link" href="privacy/">Privacy</a>
+      <a class="site-nav__link" href="terms/">Terms</a>
+    </nav>
+    <a class="btn btn--accent btn--small site-header__cta" href="beta/">Join the alpha</a>
+  </div>
 </header>
-<main>
-<h1>HopOn</h1>
-<p class="lead">The app for friends who play together: squads, summons, live sessions and a squad court.</p>
-<p class="action">
-  <a class="button" href="beta/">Get the beta</a>
-  <a class="button quiet" href="privacy/">Privacy Policy</a>
-  <a class="button quiet" href="terms/">Terms of Use</a>
-  <a class="button quiet" href="delete-account/">Delete your account</a>
-</p>
-<p>Questions: <a href="mailto:hoponstudios@gmail.com">hoponstudios@gmail.com</a></p>
+
+<main id="main">
+<!-- The front page is a live room, as the app draws one: the squad round a
+     table on the left, the wall screen on the right, the line you type
+     into at the foot. Each piece that does something names its module
+     (data-module) — assets/js/modules/<name>.js. -->
+<section class="room" aria-labelledby="room-title">
+  <div class="room__bar wrap">
+    <span class="squad-badge" aria-hidden="true">HQ</span>
+    <span class="room__name">HopOn HQ</span>
+    <span class="live-pill" title="How long you've been in the room">
+      <span class="live-pill__dot" aria-hidden="true"></span>
+      Closed alpha <span class="live-pill__time" data-module="ticker" data-from="0">0:00</span>
+    </span>
+  </div>
+
+  <div class="room__stage wrap">
+    <div class="room__intro">
+      <p class="kicker">Closed alpha · Android</p>
+      <h1 id="room-title" class="display">Summon your squad <span class="accent">in one tap.</span></h1>
+      <p class="lead">HopOn is for friends who game together. Call everyone in, see who's actually coming, run the night from one room, and put the ghosts on trial.</p>
+      <div class="actions">
+        <a class="btn btn--accent btn--big" href="beta/">Join the closed alpha <span class="btn__arrow" aria-hidden="true">→</span></a>
+        <a class="btn btn--quiet btn--big" href="#tonight">What's on tonight</a>
+      </div>
+    </div>
+
+    <!-- The table. Four seats, the red button in the middle. -->
+    <div class="table" data-module="table">
+      <div class="table__floor" aria-hidden="true"></div>
+      <div class="table__top" aria-hidden="true">
+        <svg class="table__wood" viewBox="-200 -80 400 160" preserveAspectRatio="none">
+          <ellipse class="table__rim" cx="0" cy="0" rx="196" ry="76"/>
+          <ellipse class="table__face" cx="0" cy="-4" rx="186" ry="68"/>
+          <path class="table__ring" d="M-150,-4 C-148,-46 -60,-58 0,-57 C70,-56 150,-44 152,-6 C154,34 70,50 0,50 C-80,50 -152,36 -150,-4 Z"/>
+          <path class="table__ring" d="M-110,-3 C-108,-36 -40,-42 2,-42 C56,-41 112,-32 112,-4 C112,24 52,36 0,36 C-58,36 -112,26 -110,-3 Z"/>
+          <path class="table__ring" d="M-70,-4 C-68,-26 -20,-28 4,-28 C40,-27 72,-20 70,-3 C69,15 34,22 0,22 C-36,22 -72,16 -70,-4 Z"/>
+        </svg>
+      </div>
+
+      <!-- Hold to start: the session's red button, under its glass. -->
+      <a class="start" href="beta/" data-hold aria-describedby="start-hint">
+        <span class="start__plate">START</span>
+        <span class="start__base" aria-hidden="true">
+          <svg class="start__ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46"/></svg>
+          <span class="start__button"></span>
+          <span class="start__dome"></span>
+        </span>
+        <span class="visually-hidden">Join the closed alpha</span>
+      </a>
+      <p class="table__hint" id="start-hint">Hold <strong>START</strong> to hop on</p>
+
+      <div class="seat seat--back-left" data-seat="Nina">
+        <p class="bubble bubble--seat" data-bubble hidden></p>
+        <button class="seat__hop" type="button" aria-label="Nina">
+          <svg class="hop" viewBox="-80 -95 160 160" data-mood="normal" data-skin="headset" style="--hop:#FF7BA9" aria-hidden="true" focusable="false"><g class="hop__body"><g class="hop__worn"><path d="M-58.11,-16.92 A60,60 0 0 1 58.11,-16.92" fill="none" stroke="#1C1C23" stroke-width="7.5" stroke-linecap="round"/></g><defs><linearGradient id="hop1-face" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="hop__light"/><stop offset=".55" class="hop__mid"/><stop offset="1" class="hop__low"/></linearGradient></defs><rect x="-50" y="-50" width="100" height="100" rx="30" class="hop__base"/><rect x="-50" y="-50" width="100" height="93" rx="30" fill="url(#hop1-face)"/><path d="M-41,-10 Q-41,-43 -8,-45 Q0,-44 -7,-39 Q-33,-35 -37,-10 Z" fill="#FFFFFF" fill-opacity=".34"/><g class="hop__face hop__face--normal"><g class="hop__look"><rect x="-25" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/><rect x="3" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/></g></g><g class="hop__face hop__face--sad"><rect x="-27" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="-23.88" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="-18.91" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="-10.74" cy="6.12" r="1.6" fill="#FFF"/><rect x="3" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="6.12" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="11.09" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="19.26" cy="6.12" r="1.6" fill="#FFF"/><path d="M-27,-15 L-8,-21 M27,-15 L8,-21" class="hop__brow" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__face hop__face--fierce"><path d="M-29,-7 L-7,2 L-7,9 Q-7,13 -12,13 L-25,13 Q-29,13 -29,9 ZM29,-7 L7,2 L7,9 Q7,13 12,13 L25,13 Q29,13 29,9 Z" fill="#FAFAFA" stroke="#FAFAFA" stroke-width="5" stroke-linejoin="round"/></g><g class="hop__face hop__face--away"><path d="M-24,4 L-6,4 M6,4 L24,4" class="hop__dash" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__worn"><rect x="-64" y="-17" width="18" height="36" rx="8" fill="#1C1C23"/><rect x="-61.3" y="-10" width="3.6" height="22" rx="1.8" class="hop__stripe"/><rect x="46" y="-17" width="18" height="36" rx="8" fill="#1C1C23"/><rect x="57.7" y="-10" width="3.6" height="22" rx="1.8" class="hop__stripe"/><path d="M52,17 Q50,37 27,37" fill="none" stroke="#1C1C23" stroke-width="4.5" stroke-linecap="round"/><rect x="10" y="31.5" width="19" height="11" rx="5.5" fill="#1C1C23"/></g><ellipse class="hop__hand" cx="-33" cy="50" rx="16" ry="11"/><ellipse class="hop__hand" cx="33" cy="50" rx="16" ry="11"/></g></svg>
+        </button>
+        <span class="seat__name">Nina</span>
+      </div>
+      <div class="seat seat--back-right seat--you" data-seat="You">
+        <p class="bubble bubble--seat" data-bubble hidden></p>
+        <button class="seat__hop" type="button" aria-label="You, the captain. Tap fast if you dare." data-module="mash">
+          <svg class="hop" viewBox="-80 -95 160 160" data-mood="normal" data-skin="headset" style="--hop:var(--you)" aria-hidden="true" focusable="false"><g class="hop__body"><g class="hop__worn"><path d="M-58.11,-16.92 A60,60 0 0 1 58.11,-16.92" fill="none" stroke="#1C1C23" stroke-width="7.5" stroke-linecap="round"/></g><defs><linearGradient id="hop2-face" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="hop__light"/><stop offset=".55" class="hop__mid"/><stop offset="1" class="hop__low"/></linearGradient></defs><rect x="-50" y="-50" width="100" height="100" rx="30" class="hop__base"/><rect x="-50" y="-50" width="100" height="93" rx="30" fill="url(#hop2-face)"/><path d="M-41,-10 Q-41,-43 -8,-45 Q0,-44 -7,-39 Q-33,-35 -37,-10 Z" fill="#FFFFFF" fill-opacity=".34"/><g class="hop__face hop__face--normal"><g class="hop__look"><rect x="-25" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/><rect x="3" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/></g></g><g class="hop__face hop__face--sad"><rect x="-27" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="-23.88" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="-18.91" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="-10.74" cy="6.12" r="1.6" fill="#FFF"/><rect x="3" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="6.12" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="11.09" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="19.26" cy="6.12" r="1.6" fill="#FFF"/><path d="M-27,-15 L-8,-21 M27,-15 L8,-21" class="hop__brow" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__face hop__face--fierce"><path d="M-29,-7 L-7,2 L-7,9 Q-7,13 -12,13 L-25,13 Q-29,13 -29,9 ZM29,-7 L7,2 L7,9 Q7,13 12,13 L25,13 Q29,13 29,9 Z" fill="#FAFAFA" stroke="#FAFAFA" stroke-width="5" stroke-linejoin="round"/></g><g class="hop__face hop__face--away"><path d="M-24,4 L-6,4 M6,4 L24,4" class="hop__dash" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__worn"><rect x="-64" y="-17" width="18" height="36" rx="8" fill="#1C1C23"/><rect x="-61.3" y="-10" width="3.6" height="22" rx="1.8" class="hop__stripe"/><rect x="46" y="-17" width="18" height="36" rx="8" fill="#1C1C23"/><rect x="57.7" y="-10" width="3.6" height="22" rx="1.8" class="hop__stripe"/><path d="M52,17 Q50,37 27,37" fill="none" stroke="#1C1C23" stroke-width="4.5" stroke-linecap="round"/><rect x="10" y="31.5" width="19" height="11" rx="5.5" fill="#1C1C23"/></g><g class="hop__outfit"><clipPath id="hop2-jacket"><rect x="-50" y="-50" width="100" height="100" rx="30"/></clipPath><g clip-path="url(#hop2-jacket)"><rect x="-52" y="18" width="104" height="34" fill="#16161B"/><path d="M-13,18 L13,18 L0,42 Z" class="hop__neck"/><path d="M-13,18 L-28,20 L-12,37 L-3,36 Z" fill="#2A2A32"/><circle cx="-20" cy="24.5" r="2" fill="#C9CBD3"/><circle cx="-35" cy="33" r="2" fill="#C9CBD3"/><path d="M13,18 L28,20 L12,37 L3,36 Z" fill="#2A2A32"/><circle cx="20" cy="24.5" r="2" fill="#C9CBD3"/><circle cx="35" cy="33" r="2" fill="#C9CBD3"/></g><path d="M0,20 L-10,14.5 L-10,25.5 Z" fill="#E0403A"/><path d="M0,20 L10,14.5 L10,25.5 Z" fill="#E0403A"/><circle cx="0" cy="20" r="3" fill="#B8302B"/><ellipse cx="-44" cy="30" rx="9" ry="10" fill="#16161B"/><g class="hop__bat" transform="translate(-52 26) rotate(-146.1)"><defs><linearGradient id="hop2-wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E3AA6C"/><stop offset=".5" stop-color="#C98A4B"/><stop offset="1" stop-color="#9C6533"/></linearGradient></defs><path d="M-12,-3.5 L36.75,-3.5 Q63,-9 84,-9.5 L105,-9.5 A9.5,9.5 0 0 1 105,9.5 L84,9.5 Q63,9 36.75,3.5 L-12,3.5 Z" fill="url(#hop2-wood)"/><ellipse cx="-14" cy="0" rx="3" ry="6" fill="url(#hop2-wood)"/><path d="M52.5,-5 Q78.75,-7 102.9,-6" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-opacity=".35"/></g><rect x="-65" y="14.3" width="26" height="23.4" rx="9.1" fill="#1A1A20"/><path d="M-53.3,22.75 L-44.2,22.75" fill="none" stroke="#34343E" stroke-width="1.56" stroke-linecap="round"/><path d="M-53.3,27.95 L-44.2,27.95" fill="none" stroke="#34343E" stroke-width="1.56" stroke-linecap="round"/><path d="M-61.33,21.97 A10.4,9.1 0 0 1 -51.09,16.93" fill="none" stroke="#FFFFFF" stroke-width="1.56" stroke-linecap="round" stroke-opacity=".18"/><rect x="39" y="24.1" width="22" height="19.8" rx="7.7" fill="#1A1A20"/><path d="M48.9,31.25 L56.6,31.25" fill="none" stroke="#34343E" stroke-width="1.32" stroke-linecap="round"/><path d="M48.9,35.65 L56.6,35.65" fill="none" stroke="#34343E" stroke-width="1.32" stroke-linecap="round"/><path d="M42.11,30.59 A8.8,7.7 0 0 1 50.77,26.33" fill="none" stroke="#FFFFFF" stroke-width="1.32" stroke-linecap="round" stroke-opacity=".18"/></g><g class="hop__cap" transform="translate(0 -50) rotate(-4.58)"><defs><linearGradient id="hop2-cap" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4F1EA"/><stop offset="1" stop-color="#D9D4C8"/></linearGradient></defs><path d="M-33,3 L-47,-20 Q0,-36 47,-20 L33,3 Z" fill="url(#hop2-cap)"/><rect x="-35" y="-5" width="70" height="10" rx="2" fill="#1F2742"/><path d="M-36,4 Q0,20 36,4 Q0,10 -36,4 Z" fill="#121217"/><circle cx="0" cy="-13" r="6.5" fill="#F5C84A"/><circle cx="0" cy="-13" r="2.8" fill="#1F2742"/></g><ellipse class="hop__hand" cx="-33" cy="50" rx="16" ry="11"/><ellipse class="hop__hand" cx="33" cy="50" rx="16" ry="11"/></g></svg>
+        </button>
+        <span class="seat__name">You</span>
+      </div>
+      <div class="seat seat--front-left" data-seat="Jake">
+        <p class="bubble bubble--seat" data-bubble hidden></p>
+        <button class="seat__hop" type="button" aria-label="Jake, who stepped away">
+          <svg class="hop" viewBox="-80 -95 160 160" data-mood="away" data-skin="headset" style="--hop:#6BCB5A" aria-hidden="true" focusable="false"><g class="hop__body"><g class="hop__worn"><path d="M-58.11,-16.92 A60,60 0 0 1 58.11,-16.92" fill="none" stroke="#1C1C23" stroke-width="7.5" stroke-linecap="round"/></g><defs><linearGradient id="hop3-face" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="hop__light"/><stop offset=".55" class="hop__mid"/><stop offset="1" class="hop__low"/></linearGradient></defs><rect x="-50" y="-50" width="100" height="100" rx="30" class="hop__base"/><rect x="-50" y="-50" width="100" height="93" rx="30" fill="url(#hop3-face)"/><path d="M-41,-10 Q-41,-43 -8,-45 Q0,-44 -7,-39 Q-33,-35 -37,-10 Z" fill="#FFFFFF" fill-opacity=".34"/><g class="hop__face hop__face--normal"><g class="hop__look"><rect x="-25" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/><rect x="3" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/></g></g><g class="hop__face hop__face--sad"><rect x="-27" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="-23.88" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="-18.91" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="-10.74" cy="6.12" r="1.6" fill="#FFF"/><rect x="3" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="6.12" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="11.09" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="19.26" cy="6.12" r="1.6" fill="#FFF"/><path d="M-27,-15 L-8,-21 M27,-15 L8,-21" class="hop__brow" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__face hop__face--fierce"><path d="M-29,-7 L-7,2 L-7,9 Q-7,13 -12,13 L-25,13 Q-29,13 -29,9 ZM29,-7 L7,2 L7,9 Q7,13 12,13 L25,13 Q29,13 29,9 Z" fill="#FAFAFA" stroke="#FAFAFA" stroke-width="5" stroke-linejoin="round"/></g><g class="hop__face hop__face--away"><path d="M-24,4 L-6,4 M6,4 L24,4" class="hop__dash" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__worn"><rect x="-64" y="-17" width="18" height="36" rx="8" fill="#1C1C23"/><rect x="-61.3" y="-10" width="3.6" height="22" rx="1.8" class="hop__stripe"/><rect x="46" y="-17" width="18" height="36" rx="8" fill="#1C1C23"/><rect x="57.7" y="-10" width="3.6" height="22" rx="1.8" class="hop__stripe"/><path d="M52,17 Q50,37 27,37" fill="none" stroke="#1C1C23" stroke-width="4.5" stroke-linecap="round"/><rect x="10" y="31.5" width="19" height="11" rx="5.5" fill="#1C1C23"/></g><ellipse class="hop__hand" cx="-33" cy="50" rx="16" ry="11"/><ellipse class="hop__hand" cx="33" cy="50" rx="16" ry="11"/></g></svg>
+        </button>
+        <span class="pill pill--away">Jake · toilet <span data-module="ticker" data-from="123" data-sign="+">+2:03</span></span>
+      </div>
+      <div class="seat seat--front-right" data-seat="Lily">
+        <p class="bubble bubble--seat" data-bubble hidden></p>
+        <button class="seat__hop" type="button" aria-label="Lily">
+          <svg class="hop" viewBox="-80 -95 160 160" data-mood="normal" data-skin="wizard" style="--hop:#A78BFA" aria-hidden="true" focusable="false"><g class="hop__body"><g class="hop__worn"></g><defs><linearGradient id="hop4-face" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="hop__light"/><stop offset=".55" class="hop__mid"/><stop offset="1" class="hop__low"/></linearGradient></defs><rect x="-50" y="-50" width="100" height="100" rx="30" class="hop__base"/><rect x="-50" y="-50" width="100" height="93" rx="30" fill="url(#hop4-face)"/><path d="M-41,-10 Q-41,-43 -8,-45 Q0,-44 -7,-39 Q-33,-35 -37,-10 Z" fill="#FFFFFF" fill-opacity=".34"/><g class="hop__face hop__face--normal"><g class="hop__look"><rect x="-25" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/><rect x="3" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/></g></g><g class="hop__face hop__face--sad"><rect x="-27" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="-23.88" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="-18.91" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="-10.74" cy="6.12" r="1.6" fill="#FFF"/><rect x="3" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="6.12" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="11.09" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="19.26" cy="6.12" r="1.6" fill="#FFF"/><path d="M-27,-15 L-8,-21 M27,-15 L8,-21" class="hop__brow" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__face hop__face--fierce"><path d="M-29,-7 L-7,2 L-7,9 Q-7,13 -12,13 L-25,13 Q-29,13 -29,9 ZM29,-7 L7,2 L7,9 Q7,13 12,13 L25,13 Q29,13 29,9 Z" fill="#FAFAFA" stroke="#FAFAFA" stroke-width="5" stroke-linejoin="round"/></g><g class="hop__face hop__face--away"><path d="M-24,4 L-6,4 M6,4 L24,4" class="hop__dash" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__worn"><g transform="translate(0 -45) rotate(-2.86)"><clipPath id="hop4-cone"><path d="M-27,0 Q-14,-18 -4,-33 Q4,-42 19,-37 Q8,-32 6,-24 Q12,-10 27,0 Z"/></clipPath><path d="M-27,0 Q-14,-18 -4,-33 Q4,-42 19,-37 Q8,-32 6,-24 Q12,-10 27,0 Z" fill="#4B3B8F"/><rect x="-30" y="-8" width="60" height="5" class="hop__band" clip-path="url(#hop4-cone)"/><path d="M-9,-19.5 Q-9,-15 -4.5,-15 Q-9,-15 -9,-10.5 Q-9,-15 -13.5,-15 Q-9,-15 -9,-19.5 Z" fill="#F5C84A"/><path d="M5,-20.5 Q5,-17 8.5,-17 Q5,-17 5,-13.5 Q5,-17 1.5,-17 Q5,-17 5,-20.5 Z" fill="#F5C84A"/><path d="M-3,-29 Q-3,-26 0,-26 Q-3,-26 -3,-23 Q-3,-26 -6,-26 Q-3,-26 -3,-29 Z" fill="#F5C84A"/><ellipse cx="0" cy="0" rx="40" ry="6.5" fill="#3A2D70"/></g></g><ellipse class="hop__hand" cx="-33" cy="50" rx="16" ry="11"/><ellipse class="hop__hand" cx="33" cy="50" rx="16" ry="11"/></g></svg>
+        </button>
+        <span class="seat__name">Lily</span>
+      </div>
+
+      <!-- What the squad says while you're here. One line at a time, from
+           a seat at random; tapping a Hop makes them say one. -->
+      <template data-banter>
+        <p data-by="Nina">jake where are you</p>
+        <p data-by="Lily">light a candle for him</p>
+        <p data-by="Nina">one more game. one.</p>
+        <p data-by="Lily">who picked this game</p>
+        <p data-by="You">hold the red button, coward</p>
+        <p data-by="Nina">did he fall in</p>
+        <p data-by="Lily">spin the wheel then</p>
+        <p data-by="You">squad, we are so back</p>
+        <p data-by="Nina">i'm in. for real this time</p>
+        <p data-by="Lily">this is a receipt moment</p>
+        <p data-by="Jake">brb</p>
+        <p data-by="Jake">2 mins</p>
+      </template>
+    </div>
+
+    <!-- The wall screen. The first slide is what shows without scripts. -->
+    <div class="room__wall">
+      <div class="wall-deco" aria-hidden="true">
+        <svg class="wall-deco__shelf" viewBox="0 0 120 64">
+          <rect x="6" y="14" width="12" height="40" rx="2" fill="#B8423C"/>
+          <rect x="19" y="8" width="11" height="46" rx="2" fill="#3E7C6B"/>
+          <rect x="31" y="16" width="10" height="38" rx="2" fill="#D9A441"/>
+          <rect x="42" y="12" width="12" height="42" rx="2" fill="#5B5FC7"/>
+          <rect x="57" y="18" width="11" height="36" rx="2" fill="#4C9AFF" transform="rotate(14 62 54)"/>
+          <rect x="2" y="54" width="112" height="6" rx="2" fill="#7A5434"/>
+          <rect x="10" y="60" width="6" height="4" fill="#5A3C24"/><rect x="100" y="60" width="6" height="4" fill="#5A3C24"/>
+        </svg>
+        <button class="potato" type="button" aria-label="Hot potato" data-module="potato">
+          <span class="potato__cord"></span>
+          <svg class="potato__body" viewBox="0 0 60 44">
+            <ellipse cx="30" cy="24" rx="27" ry="18" fill="#C98A4B"/>
+            <ellipse cx="25" cy="18" rx="18" ry="9" fill="#E3AA6C" opacity=".55"/>
+            <circle cx="20" cy="26" r="2.2" fill="#8C5A2E"/><circle cx="36" cy="20" r="1.8" fill="#8C5A2E"/><circle cx="41" cy="30" r="2" fill="#8C5A2E"/><circle cx="28" cy="33" r="1.5" fill="#8C5A2E"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="tv" data-module="tv" role="region" aria-roledescription="carousel" aria-label="What's on HopOn">
+        <div class="tv__frame">
+          <div class="tv__screen">
+            <div class="tv__slides">
+              <article class="tv-slide tv-slide--shout tv-slide--purple" data-channel="welcome" aria-roledescription="slide">
+                <p class="tv-slide__shout">You found<br>the room.</p>
+                <p class="tv-slide__small">Closed alpha. Act natural.</p>
+              </article>
+              <article class="tv-slide tv-slide--phone tv-slide--yellow" data-channel="summon" aria-roledescription="slide">
+                <div class="phone"><img src="assets/img/screens/home.webp" width="712" height="1556" alt="HopOn's Squads page: two squads, one with Valorant starting in 20 minutes and three people in." decoding="async"></div>
+                <div class="tv-slide__text">
+                  <p class="tv-slide__eyebrow">Now showing</p>
+                  <h2 class="tv-slide__title">Summon</h2>
+                  <p class="tv-slide__line">Pick the game and the time. Everyone's phone gets the call.</p>
+                </div>
+              </article>
+              <article class="tv-slide tv-slide--phone tv-slide--green" data-channel="table" aria-roledescription="slide">
+                <div class="phone"><img src="assets/img/screens/summon.webp" width="712" height="1556" alt="A summon in HopOn: the squad's Hops round a table, each showing In or Maybe, and a red start button." loading="lazy" decoding="async"></div>
+                <div class="tv-slide__text">
+                  <p class="tv-slide__eyebrow">Now showing</p>
+                  <h2 class="tv-slide__title">Who's actually coming</h2>
+                  <p class="tv-slide__line">In, maybe, out. Everyone's Hop sits at the table with their answer.</p>
+                </div>
+              </article>
+              <article class="tv-slide tv-slide--shout tv-slide--red" data-channel="pizza" aria-roledescription="slide">
+                <p class="tv-slide__shout">Jake buys<br>the pizza.</p>
+                <p class="tv-slide__small">The poll has spoken.</p>
+              </article>
+              <article class="tv-slide tv-slide--phone tv-slide--magenta" data-channel="room" aria-roledescription="slide">
+                <div class="phone"><img src="assets/img/screens/room.webp" width="712" height="1556" alt="A live room in HopOn: Rocket League on the wall screen, the squad round the table, typed lines read out loud." loading="lazy" decoding="async"></div>
+                <div class="tv-slide__text">
+                  <p class="tv-slide__eyebrow">Now showing</p>
+                  <h2 class="tv-slide__title">The room</h2>
+                  <p class="tv-slide__line">Game night gets its own room. Keep it open next to you while you play.</p>
+                </div>
+              </article>
+              <article class="tv-slide tv-slide--phone tv-slide--orange" data-channel="wheel" aria-roledescription="slide">
+                <div class="phone"><img src="assets/img/screens/wheel.webp" width="712" height="1556" alt="The random wheel in HopOn, landed on Rocket League." loading="lazy" decoding="async"></div>
+                <div class="tv-slide__text">
+                  <p class="tv-slide__eyebrow">Now showing</p>
+                  <h2 class="tv-slide__title">The wheel</h2>
+                  <p class="tv-slide__line">Can't agree on a game? Spin it. No appeals.</p>
+                </div>
+              </article>
+              <article class="tv-slide tv-slide--phone tv-slide--red" data-channel="court" aria-roledescription="slide">
+                <div class="phone"><img src="assets/img/screens/court.webp" width="712" height="1556" alt="Squad court in HopOn: The Squad v. Tyler, stamped GUILTY, sentenced to a clown look for three days." loading="lazy" decoding="async"></div>
+                <div class="tv-slide__text">
+                  <p class="tv-slide__eyebrow">Now showing</p>
+                  <h2 class="tv-slide__title">Squad court</h2>
+                  <p class="tv-slide__line">Said in and never came? The squad votes. The sentence is a new look.</p>
+                </div>
+              </article>
+              <article class="tv-slide tv-slide--shout tv-slide--teal" data-channel="tyler" aria-roledescription="slide">
+                <p class="tv-slide__shout">Said in.<br>Never came.</p>
+                <p class="tv-slide__small">Tyler, this one's about you.</p>
+              </article>
+              <article class="tv-slide tv-slide--phone tv-slide--blue" data-channel="receipts" aria-roledescription="slide">
+                <div class="phone"><img src="assets/img/screens/receipt.webp" width="712" height="1556" alt="A HopOn receipt: who came, who was late, who ghosted, and the squad's ghost rate." loading="lazy" decoding="async"></div>
+                <div class="tv-slide__text">
+                  <p class="tv-slide__eyebrow">Now showing</p>
+                  <h2 class="tv-slide__title">Receipts</h2>
+                  <p class="tv-slide__line">Who came, who was late, who ghosted. Admissible in all group chats.</p>
+                </div>
+              </article>
+              <article class="tv-slide tv-slide--wide tv-slide--purple" data-channel="cards" aria-roledescription="slide">
+                <img class="tv-slide__wide" src="assets/img/screens/cards.webp" width="1080" height="820" alt="Three HopOn player cards fanned out, with ratings, aura and stats." loading="lazy" decoding="async">
+                <div class="tv-slide__text">
+                  <p class="tv-slide__eyebrow">Now showing</p>
+                  <h2 class="tv-slide__title">Everyone gets a card</h2>
+                  <p class="tv-slide__line">Stats don't lie.</p>
+                </div>
+              </article>
+              <article class="tv-slide tv-slide--shout tv-slide--yellow" data-channel="squad" aria-roledescription="slide">
+                <p class="tv-slide__shout">Bring the<br>squad.</p>
+                <p class="tv-slide__small">It's made for the friends you already play with.</p>
+              </article>
+            </div>
+            <div class="tv__static" aria-hidden="true"></div>
+            <span class="tv__bug" aria-hidden="true"><span class="tv__bug-dot"></span>On air</span>
+            <span class="tv__osd" aria-hidden="true"></span>
+          </div>
+        </div>
+        <div class="tv__remote" hidden>
+          <button class="key key--icon" type="button" data-tv="prev" aria-label="Previous channel">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <button class="key key--icon" type="button" data-tv="pause" aria-label="Pause the screen">
+            <svg class="tv__icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>
+            <svg class="tv__icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>
+          </button>
+          <div class="tv__dots" role="group" aria-label="Channels"></div>
+          <button class="key key--icon" type="button" data-tv="next" aria-label="Next channel">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Type a line: your Hop says it out loud, as typed lines are in the
+       app's live room. The little Hop opens the colour picker. -->
+  <div class="room__dock wrap">
+    <form class="say" data-module="say" autocomplete="off" hidden>
+      <p class="bubble bubble--seat say__bubble" data-bubble hidden></p>
+      <button class="say__me" type="button" data-module="colours" aria-label="Pick your Hop's colour" aria-expanded="false" aria-controls="colours">
+        <svg class="hop" viewBox="-80 -95 160 160" data-mood="normal" data-skin="headset" style="--hop:var(--you)" aria-hidden="true" focusable="false"><g class="hop__body"><g class="hop__worn"><path d="M-58.11,-16.92 A60,60 0 0 1 58.11,-16.92" fill="none" stroke="#1C1C23" stroke-width="7.5" stroke-linecap="round"/></g><defs><linearGradient id="hop5-face" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="hop__light"/><stop offset=".55" class="hop__mid"/><stop offset="1" class="hop__low"/></linearGradient></defs><rect x="-50" y="-50" width="100" height="100" rx="30" class="hop__base"/><rect x="-50" y="-50" width="100" height="93" rx="30" fill="url(#hop5-face)"/><path d="M-41,-10 Q-41,-43 -8,-45 Q0,-44 -7,-39 Q-33,-35 -37,-10 Z" fill="#FFFFFF" fill-opacity=".34"/><g class="hop__face hop__face--normal"><g class="hop__look"><rect x="-25" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/><rect x="3" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/></g></g><g class="hop__face hop__face--sad"><rect x="-27" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="-23.88" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="-18.91" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="-10.74" cy="6.12" r="1.6" fill="#FFF"/><rect x="3" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="6.12" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="11.09" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="19.26" cy="6.12" r="1.6" fill="#FFF"/><path d="M-27,-15 L-8,-21 M27,-15 L8,-21" class="hop__brow" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__face hop__face--fierce"><path d="M-29,-7 L-7,2 L-7,9 Q-7,13 -12,13 L-25,13 Q-29,13 -29,9 ZM29,-7 L7,2 L7,9 Q7,13 12,13 L25,13 Q29,13 29,9 Z" fill="#FAFAFA" stroke="#FAFAFA" stroke-width="5" stroke-linejoin="round"/></g><g class="hop__face hop__face--away"><path d="M-24,4 L-6,4 M6,4 L24,4" class="hop__dash" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__worn"><rect x="-64" y="-17" width="18" height="36" rx="8" fill="#1C1C23"/><rect x="-61.3" y="-10" width="3.6" height="22" rx="1.8" class="hop__stripe"/><rect x="46" y="-17" width="18" height="36" rx="8" fill="#1C1C23"/><rect x="57.7" y="-10" width="3.6" height="22" rx="1.8" class="hop__stripe"/><path d="M52,17 Q50,37 27,37" fill="none" stroke="#1C1C23" stroke-width="4.5" stroke-linecap="round"/><rect x="10" y="31.5" width="19" height="11" rx="5.5" fill="#1C1C23"/></g><g class="hop__cap" transform="translate(0 -50) rotate(-4.58)"><defs><linearGradient id="hop5-cap" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4F1EA"/><stop offset="1" stop-color="#D9D4C8"/></linearGradient></defs><path d="M-33,3 L-47,-20 Q0,-36 47,-20 L33,3 Z" fill="url(#hop5-cap)"/><rect x="-35" y="-5" width="70" height="10" rx="2" fill="#1F2742"/><path d="M-36,4 Q0,20 36,4 Q0,10 -36,4 Z" fill="#121217"/><circle cx="0" cy="-13" r="6.5" fill="#F5C84A"/><circle cx="0" cy="-13" r="2.8" fill="#1F2742"/></g></g></svg>
+      </button>
+      <label class="visually-hidden" for="say-line">Say something to the squad</label>
+      <input class="say__input" id="say-line" name="line" maxlength="60" placeholder="Type it. The squad hears it." enterkeyhint="send">
+      <button class="say__send" type="submit" aria-label="Say it">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+      </button>
+      <div class="colours" id="colours" role="group" aria-label="Your colour" hidden>
+        <p class="colours__label">Your colour. Change it any time.</p>
+        <div class="colours__row">
+          <button type="button" class="colours__swatch" style="--swatch:#FFC83D" data-colour="#FFC83D" aria-label="HopOn yellow"></button>
+          <button type="button" class="colours__swatch" style="--swatch:#FF9F45" data-colour="#FF9F45" aria-label="Orange"></button>
+          <button type="button" class="colours__swatch" style="--swatch:#FF5A4F" data-colour="#FF5A4F" aria-label="Red"></button>
+          <button type="button" class="colours__swatch" style="--swatch:#FF7BA9" data-colour="#FF7BA9" aria-label="Pink"></button>
+          <button type="button" class="colours__swatch" style="--swatch:#A78BFA" data-colour="#A78BFA" aria-label="Purple"></button>
+          <button type="button" class="colours__swatch" style="--swatch:#4C9AFF" data-colour="#4C9AFF" aria-label="Blue"></button>
+          <button type="button" class="colours__swatch" style="--swatch:#2DD4BF" data-colour="#2DD4BF" aria-label="Teal"></button>
+          <button type="button" class="colours__swatch" style="--swatch:#6BCB5A" data-colour="#6BCB5A" aria-label="Green"></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- What's in the app, as a night's TV guide. "Watch" tunes the screen
+     above to that channel. -->
+<section class="tonight wrap" id="tonight" aria-labelledby="tonight-title">
+  <header class="section-head">
+    <p class="kicker">Tonight on HopOn</p>
+    <h2 id="tonight-title" class="title-xl">One app for the whole night.</h2>
+  </header>
+  <ol class="guide">
+    <li class="guide__row" data-reveal>
+      <span class="guide__time">8:00 PM</span>
+      <span class="guide__hop"><svg class="hop" viewBox="-80 -95 160 160" data-mood="normal" data-skin="headset" style="--hop:#FFC83D" aria-hidden="true" focusable="false"><g class="hop__body"><g class="hop__worn"><path d="M-58.11,-16.92 A60,60 0 0 1 58.11,-16.92" fill="none" stroke="#1C1C23" stroke-width="7.5" stroke-linecap="round"/></g><defs><linearGradient id="hop6-face" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="hop__light"/><stop offset=".55" class="hop__mid"/><stop offset="1" class="hop__low"/></linearGradient></defs><rect x="-50" y="-50" width="100" height="100" rx="30" class="hop__base"/><rect x="-50" y="-50" width="100" height="93" rx="30" fill="url(#hop6-face)"/><path d="M-41,-10 Q-41,-43 -8,-45 Q0,-44 -7,-39 Q-33,-35 -37,-10 Z" fill="#FFFFFF" fill-opacity=".34"/><g class="hop__face hop__face--normal"><g class="hop__look"><rect x="-25" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/><rect x="3" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/></g></g><g class="hop__face hop__face--sad"><rect x="-27" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="-23.88" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="-18.91" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="-10.74" cy="6.12" r="1.6" fill="#FFF"/><rect x="3" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="6.12" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="11.09" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="19.26" cy="6.12" r="1.6" fill="#FFF"/><path d="M-27,-15 L-8,-21 M27,-15 L8,-21" class="hop__brow" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__face hop__face--fierce"><path d="M-29,-7 L-7,2 L-7,9 Q-7,13 -12,13 L-25,13 Q-29,13 -29,9 ZM29,-7 L7,2 L7,9 Q7,13 12,13 L25,13 Q29,13 29,9 Z" fill="#FAFAFA" stroke="#FAFAFA" stroke-width="5" stroke-linejoin="round"/></g><g class="hop__face hop__face--away"><path d="M-24,4 L-6,4 M6,4 L24,4" class="hop__dash" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__worn"><rect x="-64" y="-17" width="18" height="36" rx="8" fill="#1C1C23"/><rect x="-61.3" y="-10" width="3.6" height="22" rx="1.8" class="hop__stripe"/><rect x="46" y="-17" width="18" height="36" rx="8" fill="#1C1C23"/><rect x="57.7" y="-10" width="3.6" height="22" rx="1.8" class="hop__stripe"/><path d="M52,17 Q50,37 27,37" fill="none" stroke="#1C1C23" stroke-width="4.5" stroke-linecap="round"/><rect x="10" y="31.5" width="19" height="11" rx="5.5" fill="#1C1C23"/></g></g></svg></span>
+      <div class="guide__body">
+        <h3 class="guide__title">Summon</h3>
+        <p>One tap and everyone's phone rings. Pick the game and the time, or let the squad pick when suits them.</p>
+      </div>
+      <button class="guide__tune" type="button" data-tune="summon" hidden>Watch <span aria-hidden="true">▶</span></button>
+    </li>
+    <li class="guide__row" data-reveal>
+      <span class="guide__time">8:05 PM</span>
+      <span class="guide__hop"><svg class="hop" viewBox="-80 -95 160 160" data-mood="normal" data-skin="pink_bow" style="--hop:#FF7BA9" aria-hidden="true" focusable="false"><g class="hop__body"><g class="hop__worn"></g><defs><linearGradient id="hop7-face" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="hop__light"/><stop offset=".55" class="hop__mid"/><stop offset="1" class="hop__low"/></linearGradient></defs><rect x="-50" y="-50" width="100" height="100" rx="30" class="hop__base"/><rect x="-50" y="-50" width="100" height="93" rx="30" fill="url(#hop7-face)"/><path d="M-41,-10 Q-41,-43 -8,-45 Q0,-44 -7,-39 Q-33,-35 -37,-10 Z" fill="#FFFFFF" fill-opacity=".34"/><g class="hop__face hop__face--normal"><g class="hop__look"><rect x="-25" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/><rect x="3" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/></g></g><g class="hop__face hop__face--sad"><rect x="-27" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="-23.88" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="-18.91" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="-10.74" cy="6.12" r="1.6" fill="#FFF"/><rect x="3" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="6.12" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="11.09" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="19.26" cy="6.12" r="1.6" fill="#FFF"/><path d="M-27,-15 L-8,-21 M27,-15 L8,-21" class="hop__brow" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__face hop__face--fierce"><path d="M-29,-7 L-7,2 L-7,9 Q-7,13 -12,13 L-25,13 Q-29,13 -29,9 ZM29,-7 L7,2 L7,9 Q7,13 12,13 L25,13 Q29,13 29,9 Z" fill="#FAFAFA" stroke="#FAFAFA" stroke-width="5" stroke-linejoin="round"/></g><g class="hop__face hop__face--away"><path d="M-24,4 L-6,4 M6,4 L24,4" class="hop__dash" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__worn"><ellipse cx="-30" cy="17" rx="6" ry="3.5" fill="#FF7BAA" fill-opacity=".35"/><ellipse cx="30" cy="17" rx="6" ry="3.5" fill="#FF7BAA" fill-opacity=".35"/><g transform="translate(-30 -44) rotate(-20.05)"><path d="M0,0 L-8,12 L-3,11 Z" fill="#E65C9E"/><path d="M0,0 C-5,-10 -14,-9 -13,0 C-14,9 -5,10 0,0 Z" fill="#FF8CC6"/><path d="M0,0 L-8,-2" fill="none" stroke="#E65C9E" stroke-width="1.2" stroke-linecap="round"/><path d="M0,0 L8,12 L3,11 Z" fill="#E65C9E"/><path d="M0,0 C5,-10 14,-9 13,0 C14,9 5,10 0,0 Z" fill="#FF8CC6"/><path d="M0,0 L8,-2" fill="none" stroke="#E65C9E" stroke-width="1.2" stroke-linecap="round"/><circle cx="-8.5" cy="-3.5" r="1.5" fill="#FFF" fill-opacity=".55"/><rect x="-3.5" y="-4" width="7" height="8" rx="3" fill="#E65C9E"/></g></g></g></svg></span>
+      <div class="guide__body">
+        <h3 class="guide__title">The table</h3>
+        <p>In, maybe, out, with everyone's Hop at the table. The captain holds the red button when the squad is ready.</p>
+      </div>
+      <button class="guide__tune" type="button" data-tune="table" hidden>Watch <span aria-hidden="true">▶</span></button>
+    </li>
+    <li class="guide__row" data-reveal>
+      <span class="guide__time">8:20 PM</span>
+      <span class="guide__hop"><svg class="hop" viewBox="-80 -95 160 160" data-mood="normal" data-skin="wizard" style="--hop:#A78BFA" aria-hidden="true" focusable="false"><g class="hop__body"><g class="hop__worn"></g><defs><linearGradient id="hop8-face" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="hop__light"/><stop offset=".55" class="hop__mid"/><stop offset="1" class="hop__low"/></linearGradient></defs><rect x="-50" y="-50" width="100" height="100" rx="30" class="hop__base"/><rect x="-50" y="-50" width="100" height="93" rx="30" fill="url(#hop8-face)"/><path d="M-41,-10 Q-41,-43 -8,-45 Q0,-44 -7,-39 Q-33,-35 -37,-10 Z" fill="#FFFFFF" fill-opacity=".34"/><g class="hop__face hop__face--normal"><g class="hop__look"><rect x="-25" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/><rect x="3" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/></g></g><g class="hop__face hop__face--sad"><rect x="-27" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="-23.88" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="-18.91" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="-10.74" cy="6.12" r="1.6" fill="#FFF"/><rect x="3" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="6.12" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="11.09" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="19.26" cy="6.12" r="1.6" fill="#FFF"/><path d="M-27,-15 L-8,-21 M27,-15 L8,-21" class="hop__brow" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__face hop__face--fierce"><path d="M-29,-7 L-7,2 L-7,9 Q-7,13 -12,13 L-25,13 Q-29,13 -29,9 ZM29,-7 L7,2 L7,9 Q7,13 12,13 L25,13 Q29,13 29,9 Z" fill="#FAFAFA" stroke="#FAFAFA" stroke-width="5" stroke-linejoin="round"/></g><g class="hop__face hop__face--away"><path d="M-24,4 L-6,4 M6,4 L24,4" class="hop__dash" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__worn"><g transform="translate(0 -45) rotate(-2.86)"><clipPath id="hop8-cone"><path d="M-27,0 Q-14,-18 -4,-33 Q4,-42 19,-37 Q8,-32 6,-24 Q12,-10 27,0 Z"/></clipPath><path d="M-27,0 Q-14,-18 -4,-33 Q4,-42 19,-37 Q8,-32 6,-24 Q12,-10 27,0 Z" fill="#4B3B8F"/><rect x="-30" y="-8" width="60" height="5" class="hop__band" clip-path="url(#hop8-cone)"/><path d="M-9,-19.5 Q-9,-15 -4.5,-15 Q-9,-15 -9,-10.5 Q-9,-15 -13.5,-15 Q-9,-15 -9,-19.5 Z" fill="#F5C84A"/><path d="M5,-20.5 Q5,-17 8.5,-17 Q5,-17 5,-13.5 Q5,-17 1.5,-17 Q5,-17 5,-20.5 Z" fill="#F5C84A"/><path d="M-3,-29 Q-3,-26 0,-26 Q-3,-26 -3,-23 Q-3,-26 -6,-26 Q-3,-26 -3,-29 Z" fill="#F5C84A"/><ellipse cx="0" cy="0" rx="40" ry="6.5" fill="#3A2D70"/></g></g></g></svg></span>
+      <div class="guide__body">
+        <h3 class="guide__title">The room</h3>
+        <p>Your phone on the side while you play: put things on the screen, spin the wheel, run a poll, call a break, throw tomatoes.</p>
+      </div>
+      <button class="guide__tune" type="button" data-tune="room" hidden>Watch <span aria-hidden="true">▶</span></button>
+    </li>
+    <li class="guide__row" data-reveal>
+      <span class="guide__time">9:40 PM</span>
+      <span class="guide__hop"><svg class="hop" viewBox="-80 -95 160 160" data-mood="fierce" data-skin="headset" style="--hop:#6BCB5A" aria-hidden="true" focusable="false"><g class="hop__body"><g class="hop__worn"><path d="M-58.11,-16.92 A60,60 0 0 1 58.11,-16.92" fill="none" stroke="#1C1C23" stroke-width="7.5" stroke-linecap="round"/></g><defs><linearGradient id="hop9-face" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="hop__light"/><stop offset=".55" class="hop__mid"/><stop offset="1" class="hop__low"/></linearGradient></defs><rect x="-50" y="-50" width="100" height="100" rx="30" class="hop__base"/><rect x="-50" y="-50" width="100" height="93" rx="30" fill="url(#hop9-face)"/><path d="M-41,-10 Q-41,-43 -8,-45 Q0,-44 -7,-39 Q-33,-35 -37,-10 Z" fill="#FFFFFF" fill-opacity=".34"/><g class="hop__face hop__face--normal"><g class="hop__look"><rect x="-25" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/><rect x="3" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/></g></g><g class="hop__face hop__face--sad"><rect x="-27" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="-23.88" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="-18.91" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="-10.74" cy="6.12" r="1.6" fill="#FFF"/><rect x="3" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="6.12" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="11.09" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="19.26" cy="6.12" r="1.6" fill="#FFF"/><path d="M-27,-15 L-8,-21 M27,-15 L8,-21" class="hop__brow" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__face hop__face--fierce"><path d="M-29,-7 L-7,2 L-7,9 Q-7,13 -12,13 L-25,13 Q-29,13 -29,9 ZM29,-7 L7,2 L7,9 Q7,13 12,13 L25,13 Q29,13 29,9 Z" fill="#FAFAFA" stroke="#FAFAFA" stroke-width="5" stroke-linejoin="round"/></g><g class="hop__face hop__face--away"><path d="M-24,4 L-6,4 M6,4 L24,4" class="hop__dash" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__worn"><rect x="-64" y="-17" width="18" height="36" rx="8" fill="#1C1C23"/><rect x="-61.3" y="-10" width="3.6" height="22" rx="1.8" class="hop__stripe"/><rect x="46" y="-17" width="18" height="36" rx="8" fill="#1C1C23"/><rect x="57.7" y="-10" width="3.6" height="22" rx="1.8" class="hop__stripe"/><path d="M52,17 Q50,37 27,37" fill="none" stroke="#1C1C23" stroke-width="4.5" stroke-linecap="round"/><rect x="10" y="31.5" width="19" height="11" rx="5.5" fill="#1C1C23"/></g></g></svg></span>
+      <div class="guide__body">
+        <h3 class="guide__title">Squad court</h3>
+        <p>Said in and never came? Put them on trial. The jury votes, the gavel falls, and the sentence is a look they wear.</p>
+      </div>
+      <button class="guide__tune" type="button" data-tune="court" hidden>Watch <span aria-hidden="true">▶</span></button>
+    </li>
+    <li class="guide__row" data-reveal>
+      <span class="guide__time">11:58 PM</span>
+      <span class="guide__hop"><svg class="hop" viewBox="-80 -95 160 160" data-mood="normal" data-skin="top_hat" style="--hop:#4C9AFF" aria-hidden="true" focusable="false"><g class="hop__body"><g class="hop__worn"></g><defs><linearGradient id="hop10-face" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="hop__light"/><stop offset=".55" class="hop__mid"/><stop offset="1" class="hop__low"/></linearGradient></defs><rect x="-50" y="-50" width="100" height="100" rx="30" class="hop__base"/><rect x="-50" y="-50" width="100" height="93" rx="30" fill="url(#hop10-face)"/><path d="M-41,-10 Q-41,-43 -8,-45 Q0,-44 -7,-39 Q-33,-35 -37,-10 Z" fill="#FFFFFF" fill-opacity=".34"/><g class="hop__face hop__face--normal"><g class="hop__look"><rect x="-25" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/><rect x="3" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/></g></g><g class="hop__face hop__face--sad"><rect x="-27" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="-23.88" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="-18.91" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="-10.74" cy="6.12" r="1.6" fill="#FFF"/><rect x="3" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="6.12" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="11.09" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="19.26" cy="6.12" r="1.6" fill="#FFF"/><path d="M-27,-15 L-8,-21 M27,-15 L8,-21" class="hop__brow" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__face hop__face--fierce"><path d="M-29,-7 L-7,2 L-7,9 Q-7,13 -12,13 L-25,13 Q-29,13 -29,9 ZM29,-7 L7,2 L7,9 Q7,13 12,13 L25,13 Q29,13 29,9 Z" fill="#FAFAFA" stroke="#FAFAFA" stroke-width="5" stroke-linejoin="round"/></g><g class="hop__face hop__face--away"><path d="M-24,4 L-6,4 M6,4 L24,4" class="hop__dash" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__worn"><g transform="translate(0 -47) rotate(-4.58)"><clipPath id="hop10-crown"><path d="M-22,0 L-24,-33 Q0,-36 24,-33 L22,0 Z"/></clipPath><path d="M-22,0 L-24,-33 Q0,-36 24,-33 L22,0 Z" fill="#1E1E26" stroke="#FFFFFF" stroke-opacity=".16" stroke-width="1.2"/><rect x="-30" y="-10" width="60" height="7" class="hop__band" clip-path="url(#hop10-crown)"/><path d="M-17,-28 L-16,-13" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-opacity=".2"/><rect x="-38" y="-4" width="76" height="7" rx="3.5" fill="#1E1E26" stroke="#FFFFFF" stroke-opacity=".16" stroke-width="1.2"/></g></g></g></svg></span>
+      <div class="guide__body">
+        <h3 class="guide__title">Receipts</h3>
+        <p>Every session prints one: who came, who was late, who ghosted. Tear it off and send it to the group chat.</p>
+      </div>
+      <button class="guide__tune" type="button" data-tune="receipts" hidden>Watch <span aria-hidden="true">▶</span></button>
+    </li>
+    <li class="guide__row" data-reveal>
+      <span class="guide__time">All night</span>
+      <span class="guide__hop"><svg class="hop" viewBox="-80 -95 160 160" data-mood="normal" data-skin="plain" style="--hop:#2DD4BF" aria-hidden="true" focusable="false"><g class="hop__body"><g class="hop__worn"></g><defs><linearGradient id="hop11-face" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="hop__light"/><stop offset=".55" class="hop__mid"/><stop offset="1" class="hop__low"/></linearGradient></defs><rect x="-50" y="-50" width="100" height="100" rx="30" class="hop__base"/><rect x="-50" y="-50" width="100" height="93" rx="30" fill="url(#hop11-face)"/><path d="M-41,-10 Q-41,-43 -8,-45 Q0,-44 -7,-39 Q-33,-35 -37,-10 Z" fill="#FFFFFF" fill-opacity=".34"/><g class="hop__face hop__face--normal"><g class="hop__look"><rect x="-25" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/><rect x="3" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/></g></g><g class="hop__face hop__face--sad"><rect x="-27" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="-23.88" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="-18.91" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="-10.74" cy="6.12" r="1.6" fill="#FFF"/><rect x="3" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="6.12" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="11.09" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="19.26" cy="6.12" r="1.6" fill="#FFF"/><path d="M-27,-15 L-8,-21 M27,-15 L8,-21" class="hop__brow" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__face hop__face--fierce"><path d="M-29,-7 L-7,2 L-7,9 Q-7,13 -12,13 L-25,13 Q-29,13 -29,9 ZM29,-7 L7,2 L7,9 Q7,13 12,13 L25,13 Q29,13 29,9 Z" fill="#FAFAFA" stroke="#FAFAFA" stroke-width="5" stroke-linejoin="round"/></g><g class="hop__face hop__face--away"><path d="M-24,4 L-6,4 M6,4 L24,4" class="hop__dash" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__worn"></g></g></svg></span>
+      <div class="guide__body">
+        <h3 class="guide__title">Cards, aura and fifty-odd looks</h3>
+        <p>Everyone gets a player card with stats the squad can't argue with. Show up, earn aura, and dress your Hop.</p>
+      </div>
+      <button class="guide__tune" type="button" data-tune="cards" hidden>Watch <span aria-hidden="true">▶</span></button>
+    </li>
+  </ol>
+</section>
+
+<section class="alpha-band wrap" aria-labelledby="alpha-title" data-reveal>
+  <div class="alpha-band__card">
+    <div class="alpha-band__hop"><svg class="hop" viewBox="-80 -95 160 160" data-mood="normal" data-skin="headset" style="--hop:var(--you)" aria-hidden="true" focusable="false"><g class="hop__body"><g class="hop__worn"><path d="M-58.11,-16.92 A60,60 0 0 1 58.11,-16.92" fill="none" stroke="#1C1C23" stroke-width="7.5" stroke-linecap="round"/></g><defs><linearGradient id="hop12-face" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="hop__light"/><stop offset=".55" class="hop__mid"/><stop offset="1" class="hop__low"/></linearGradient></defs><rect x="-50" y="-50" width="100" height="100" rx="30" class="hop__base"/><rect x="-50" y="-50" width="100" height="93" rx="30" fill="url(#hop12-face)"/><path d="M-41,-10 Q-41,-43 -8,-45 Q0,-44 -7,-39 Q-33,-35 -37,-10 Z" fill="#FFFFFF" fill-opacity=".34"/><g class="hop__face hop__face--normal"><g class="hop__look"><rect x="-25" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/><rect x="3" y="-7" width="22" height="18" rx="6.5" class="hop__eye" fill="#FAFAFA"/></g></g><g class="hop__face hop__face--sad"><rect x="-27" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="-23.88" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="-18.91" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="-10.74" cy="6.12" r="1.6" fill="#FFF"/><rect x="3" y="-9" width="24" height="22" rx="7.5" fill="#FAFAFA"/><rect x="6.12" y="-5.58" width="17.76" height="17.16" rx="6" fill="#2B211C"/><circle cx="11.09" cy="-1.43" r="3.3" fill="#FFF"/><circle cx="19.26" cy="6.12" r="1.6" fill="#FFF"/><path d="M-27,-15 L-8,-21 M27,-15 L8,-21" class="hop__brow" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__face hop__face--fierce"><path d="M-29,-7 L-7,2 L-7,9 Q-7,13 -12,13 L-25,13 Q-29,13 -29,9 ZM29,-7 L7,2 L7,9 Q7,13 12,13 L25,13 Q29,13 29,9 Z" fill="#FAFAFA" stroke="#FAFAFA" stroke-width="5" stroke-linejoin="round"/></g><g class="hop__face hop__face--away"><path d="M-24,4 L-6,4 M6,4 L24,4" class="hop__dash" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g><g class="hop__worn"><rect x="-64" y="-17" width="18" height="36" rx="8" fill="#1C1C23"/><rect x="-61.3" y="-10" width="3.6" height="22" rx="1.8" class="hop__stripe"/><rect x="46" y="-17" width="18" height="36" rx="8" fill="#1C1C23"/><rect x="57.7" y="-10" width="3.6" height="22" rx="1.8" class="hop__stripe"/><path d="M52,17 Q50,37 27,37" fill="none" stroke="#1C1C23" stroke-width="4.5" stroke-linecap="round"/><rect x="10" y="31.5" width="19" height="11" rx="5.5" fill="#1C1C23"/></g></g></svg></div>
+    <div class="alpha-band__text">
+      <p class="kicker">You're early</p>
+      <h2 id="alpha-title" class="title-xl">That's the point.</h2>
+      <p class="lead">HopOn is in closed alpha on Android. Get in, bring your squad, and tell us what breaks.</p>
+      <div class="actions">
+        <a class="btn btn--accent btn--big" href="beta/">Join the closed alpha <span class="btn__arrow" aria-hidden="true">→</span></a>
+      </div>
+      <p class="note">On iPhone? Not yet. It's on the way.</p>
+    </div>
+  </div>
+</section>
 
 </main>
-<footer>
-  <p>HopOn is published by HopOn Studio · <a href="mailto:hoponstudios@gmail.com">hoponstudios@gmail.com</a></p>
+<footer class="site-footer">
+  <div class="wrap">
+    <!-- The footer is a receipt, like the one the app prints at the end
+         of a session. -->
+    <div class="receipt site-footer__receipt">
+      <p class="receipt__title">H O P O N</p>
+      <p class="receipt__small">THE APP FOR FRIENDS WHO PLAY</p>
+      <hr class="receipt__rule">
+      <ul class="receipt__rows">
+        <li><a href="beta/">JOIN THE ALPHA</a><span>FREE</span></li>
+        <li><a href="privacy/">PRIVACY POLICY</a><span>READ IT</span></li>
+        <li><a href="terms/">TERMS OF USE</a><span>ALSO READ IT</span></li>
+        <li><a href="delete-account/">DELETE YOUR ACCOUNT</a><span>NO HARD FEELINGS</span></li>
+        <li><a href="mailto:hoponstudios@gmail.com">BUGS, IDEAS, ROASTS</a><span>EMAIL US</span></li>
+      </ul>
+      <hr class="receipt__rule">
+      <p class="receipt__small">THIS RECEIPT IS ADMISSIBLE<br>IN ALL GROUP CHATS</p>
+      <p class="receipt__thanks">THANK YOU FOR YOUR SERVICE</p>
+      <p class="receipt__by">HopOn is published by HopOn Studio · <a href="mailto:hoponstudios@gmail.com">hoponstudios@gmail.com</a></p>
+    </div>
+  </div>
 </footer>
+
 </body>
 </html>
